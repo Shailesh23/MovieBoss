@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">MovieBoss</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">Search</string>
+    <string name="home_screen_title">The Movie Boss</string>
+    <string name="popular_movies">Popular Movies</string>
+    <string name="top_rated_movies">Top Movies</string>
 </resources>

@@ -4,8 +4,8 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.GsonBuilder
-import com.movieboss.pojo.MoviesInfo
-import com.movieboss.pojo.Result
+import com.movieboss.pojo.movies.popular.MoviesInfoPopular
+import com.movieboss.pojo.movies.popular.ResultPopular
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
@@ -17,7 +17,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 class MoviesRequest {
 
     private val movieServer : MovieServer
-    private val pupularMovies = MutableLiveData<List<Result>>()
+    private val pupularMovies = MutableLiveData<List<ResultPopular>>()
     init {
         val gson = GsonBuilder().setFieldNamingPolicy(
             FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES
@@ -35,16 +35,16 @@ class MoviesRequest {
         movieServer = retrofit.create(MovieServer::class.java)
     }
 
-    fun getPopularMovies() : MutableLiveData<List<Result>> {
+    fun getPopularMovies() : MutableLiveData<List<ResultPopular>> {
 
         val call = movieServer.getPopularMovies()
 
-        call.enqueue(object : Callback<MoviesInfo>{
-            override fun onFailure(call: Call<MoviesInfo>, t: Throwable) {
+        call.enqueue(object : Callback<MoviesInfoPopular>{
+            override fun onFailure(call: Call<MoviesInfoPopular>, t: Throwable) {
                 Log.e("Error", t.message)
             }
 
-            override fun onResponse(call: Call<MoviesInfo>, response: Response<MoviesInfo>) {
+            override fun onResponse(call: Call<MoviesInfoPopular>, response: Response<MoviesInfoPopular>) {
                if(response.isSuccessful) {
                     pupularMovies.value = response.body()?.results
                }

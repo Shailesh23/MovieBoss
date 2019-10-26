@@ -2,20 +2,25 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:padding="5dp"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="5dp">
 
     <ImageView
         android:id="@+id/poster_image"
         android:layout_width="185dp"
-        android:layout_height="278dp" />
+        android:src="@drawable/movie_poster"
+        android:layout_height="278dp"
+        android:layout_marginBottom="@dimen/generic_padding"/>
 
     <TextView
+        android:id="@+id/title"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:textStyle="bold"
+        android:text="Joker"
+        android:textColor="@color/colorPrimary"
         android:textSize="20sp"
-        android:id="@+id/title"/>
+        android:textStyle="bold" />
 
 </LinearLayout>
