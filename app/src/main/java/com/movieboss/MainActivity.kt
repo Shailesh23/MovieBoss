@@ -7,6 +7,9 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.movieboss.adapters.HomeScreenAdapter
 import com.movieboss.network.MoviesRequest
 import com.movieboss.pojo.Result
 import com.movieboss.viewmodels.HomeViewModel
@@ -16,18 +19,32 @@ import kotlin.concurrent.thread
 
 class MainActivity : AppCompatActivity() {
 
+    //TODO add data binding
     lateinit var viewModel: HomeViewModel
+    lateinit var popularMovieList : RecyclerView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
+        actionBar?.hide()
+        supportActionBar?.hide()
+
+        popularMovieList = findViewById(R.id.popular_movie_list)
+
+        val linearLayoutManager = LinearLayoutManager(this)
+        linearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
+        popularMovieList.layoutManager = linearLayoutManager
+
         viewModel = ViewModelProviders.of(this).get(HomeViewModel::class.java)
         viewModel.popularMovies.observe(this,
-            Observer<List<Result>> { t ->
-                for(i in 0 until t?.size!!) {
-                    println(t[i].title)
-                }
+            Observer<List<Result>> { popularMovieDataList ->
+                val homeScreenAdapter = HomeScreenAdapter(this)
+                homeScreenAdapter.setPopularMovies(popularMovieDataList)
+                popularMovieList.adapter = homeScreenAdapter
+
+                homeScreenAdapter.notifyDataSetChanged()
             })
         fab.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
