@@ -11,11 +11,11 @@ import com.bumptech.glide.Glide
 import com.movieboss.R
 import com.movieboss.pojo.movies.popular.ResultPopular
 
-class HomeScreenAdapter(val context : Context) : RecyclerView.Adapter<HomeScreenViewHolder>() {
+class PopularMovieAdapter(private val context : Context) : RecyclerView.Adapter<HomeScreenViewHolder>() {
 
     lateinit var listOfPopularMovies : List<ResultPopular>
 
-    public fun setPopularMovies(popularMovies: List<ResultPopular>) {
+    fun setPopularMovies(popularMovies: List<ResultPopular>) {
         listOfPopularMovies = popularMovies
     }
 

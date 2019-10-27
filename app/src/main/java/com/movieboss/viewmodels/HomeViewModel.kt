@@ -7,5 +7,7 @@ import com.movieboss.network.MoviesRequest
 class HomeViewModel(application: Application) : AndroidViewModel(application) {
 
 
-    val popularMovies = MoviesRequest().getPopularMovies()
+    val moviesRequest = MoviesRequest()
+    val popularMovies = moviesRequest.getPopularMovies()
+    val topMovies = moviesRequest.getTopRatedMovies()
 }

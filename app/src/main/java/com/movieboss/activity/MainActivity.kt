@@ -1,4 +1,4 @@
-package com.movieboss
+package com.movieboss.activity
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -9,12 +9,17 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.movieboss.adapters.HomeScreenAdapter
+import com.movieboss.R
+import com.movieboss.adapters.PopularMovieAdapter
+import com.movieboss.adapters.TopMovieAdapter
 import com.movieboss.pojo.movies.popular.ResultPopular
+import com.movieboss.pojo.movies.toprated.ResultTopRated
+import com.movieboss.utils.Constants
 import com.movieboss.viewmodels.HomeViewModel
 import com.synnapps.carouselview.CarouselView
 
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.content_main.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -33,15 +38,19 @@ class MainActivity : AppCompatActivity() {
         popularMovieList = findViewById(R.id.popular_movie_list)
         carouselView = findViewById(R.id.carouselView)
 
-        val linearLayoutManager = LinearLayoutManager(this)
-        linearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
-        popularMovieList.layoutManager = linearLayoutManager
+        val popularMovieLayoutManager = LinearLayoutManager(this)
+        popularMovieLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
+        popularMovieList.layoutManager = popularMovieLayoutManager
+
+        val topMovieLayoutManager = LinearLayoutManager(this)
+        topMovieLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
+        top_rated_movie_list.layoutManager = topMovieLayoutManager
 
         viewModel = ViewModelProviders.of(this).get(HomeViewModel::class.java)
 
         viewModel.popularMovies.observe(this,
             Observer<List<ResultPopular>> { popularMovieDataList ->
-                val homeScreenAdapter = HomeScreenAdapter(this)
+                val homeScreenAdapter = PopularMovieAdapter(this)
                 homeScreenAdapter.setPopularMovies(popularMovieDataList)
                 popularMovieList.adapter = homeScreenAdapter
                 homeScreenAdapter.notifyDataSetChanged()
@@ -49,10 +58,17 @@ class MainActivity : AppCompatActivity() {
                 carouselView.setImageListener { position, imageView ->
                     if (null != imageView)
                         Glide.with(this@MainActivity)
-                            .load("https://image.tmdb.org/t/p/w500${popularMovieDataList[position+1].posterPath}")
+                            .load("https://image.tmdb.org/t/p/${Constants.BACKDROP_SIZE}${popularMovieDataList[position].posterPath}")
                             .into(imageView)
                 }
                 carouselView.pageCount = 5
+            })
+
+        viewModel.topMovies.observe(this,
+            Observer<List<ResultTopRated>> {
+                val topRatedMoview = TopMovieAdapter(this, it)
+                top_rated_movie_list.adapter = topRatedMoview
+                topRatedMoview.notifyDataSetChanged()
             })
     }
 

@@ -6,6 +6,8 @@ import com.google.gson.FieldNamingPolicy
 import com.google.gson.GsonBuilder
 import com.movieboss.pojo.movies.popular.MoviesInfoPopular
 import com.movieboss.pojo.movies.popular.ResultPopular
+import com.movieboss.pojo.movies.toprated.MoviesInfoTopRated
+import com.movieboss.pojo.movies.toprated.ResultTopRated
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
@@ -16,8 +18,10 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class MoviesRequest {
 
-    private val movieServer : MovieServer
+    private val movieServer: MovieServer
     private val pupularMovies = MutableLiveData<List<ResultPopular>>()
+    private val topMovies = MutableLiveData<List<ResultTopRated>>()
+
     init {
         val gson = GsonBuilder().setFieldNamingPolicy(
             FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES
@@ -35,23 +39,47 @@ class MoviesRequest {
         movieServer = retrofit.create(MovieServer::class.java)
     }
 
-    fun getPopularMovies() : MutableLiveData<List<ResultPopular>> {
+    fun getPopularMovies(): MutableLiveData<List<ResultPopular>> {
 
         val call = movieServer.getPopularMovies()
 
-        call.enqueue(object : Callback<MoviesInfoPopular>{
+        call.enqueue(object : Callback<MoviesInfoPopular> {
             override fun onFailure(call: Call<MoviesInfoPopular>, t: Throwable) {
                 Log.e("Error", t.message)
             }
 
-            override fun onResponse(call: Call<MoviesInfoPopular>, response: Response<MoviesInfoPopular>) {
-               if(response.isSuccessful) {
+            override fun onResponse(
+                call: Call<MoviesInfoPopular>,
+                response: Response<MoviesInfoPopular>
+            ) {
+                if (response.isSuccessful) {
                     pupularMovies.value = response.body()?.results
-               }
+                }
             }
 
         })
 
         return pupularMovies
+    }
+
+    fun getTopRatedMovies(): MutableLiveData<List<ResultTopRated>> {
+        val call = movieServer.getTopMovies()
+
+        call.enqueue(object : Callback<MoviesInfoTopRated> {
+            override fun onFailure(call: Call<MoviesInfoTopRated>, t: Throwable) {
+                Log.e("Error", t.message)
+            }
+
+            override fun onResponse(
+                call: Call<MoviesInfoTopRated>,
+                response: Response<MoviesInfoTopRated>
+            ) {
+                if(response.isSuccessful) {
+                    topMovies.value = response.body()?.results
+                }
+            }
+
+        })
+        return topMovies
     }
 }
