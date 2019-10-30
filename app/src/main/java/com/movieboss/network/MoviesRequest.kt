@@ -5,9 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.GsonBuilder
 import com.movieboss.pojo.movies.popular.MoviesInfoPopular
-import com.movieboss.pojo.movies.popular.ResultPopular
+import com.movieboss.pojo.movies.MovieResult
 import com.movieboss.pojo.movies.toprated.MoviesInfoTopRated
-import com.movieboss.pojo.movies.toprated.ResultTopRated
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
@@ -19,8 +18,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 class MoviesRequest {
 
     private val movieServer: MovieServer
-    private val pupularMovies = MutableLiveData<List<ResultPopular>>()
-    private val topMovies = MutableLiveData<List<ResultTopRated>>()
+    private val pupularMovies = MutableLiveData<List<MovieResult>>()
+    private val topMovies = MutableLiveData<List<MovieResult>>()
 
     init {
         val gson = GsonBuilder().setFieldNamingPolicy(
@@ -39,7 +38,7 @@ class MoviesRequest {
         movieServer = retrofit.create(MovieServer::class.java)
     }
 
-    fun getPopularMovies(): MutableLiveData<List<ResultPopular>> {
+    fun getPopularMovies(): MutableLiveData<List<MovieResult>> {
 
         val call = movieServer.getPopularMovies()
 
@@ -62,7 +61,7 @@ class MoviesRequest {
         return pupularMovies
     }
 
-    fun getTopRatedMovies(): MutableLiveData<List<ResultTopRated>> {
+    fun getTopRatedMovies(): MutableLiveData<List<MovieResult>> {
         val call = movieServer.getTopMovies()
 
         call.enqueue(object : Callback<MoviesInfoTopRated> {

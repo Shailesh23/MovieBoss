@@ -4,6 +4,7 @@ package com.movieboss.pojo.movies.toprated;
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.movieboss.pojo.movies.MovieResult;
 
 public class MoviesInfoTopRated {
 
@@ -18,7 +19,7 @@ public class MoviesInfoTopRated {
     private int totalPages;
     @SerializedName("results")
     @Expose
-    private List<ResultTopRated> results = null;
+    private List<MovieResult> results = null;
 
     public int getPage() {
         return page;
@@ -44,11 +45,11 @@ public class MoviesInfoTopRated {
         this.totalPages = totalPages;
     }
 
-    public List<ResultTopRated> getResults() {
+    public List<MovieResult> getResults() {
         return results;
     }
 
-    public void setResults(List<ResultTopRated> results) {
+    public void setResults(List<MovieResult> results) {
         this.results = results;
     }
 

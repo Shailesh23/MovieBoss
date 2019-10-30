@@ -1,11 +1,11 @@
 
-package com.movieboss.pojo.movies.toprated;
+package com.movieboss.pojo.movies;
 
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class ResultTopRated {
+public class MovieResult {
 
     @SerializedName("popularity")
     @Expose

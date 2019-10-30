@@ -12,8 +12,7 @@ import com.bumptech.glide.Glide
 import com.movieboss.R
 import com.movieboss.adapters.PopularMovieAdapter
 import com.movieboss.adapters.TopMovieAdapter
-import com.movieboss.pojo.movies.popular.ResultPopular
-import com.movieboss.pojo.movies.toprated.ResultTopRated
+import com.movieboss.pojo.movies.MovieResult
 import com.movieboss.utils.Constants
 import com.movieboss.viewmodels.HomeViewModel
 import com.synnapps.carouselview.CarouselView
@@ -49,7 +48,7 @@ class MainActivity : AppCompatActivity() {
         viewModel = ViewModelProviders.of(this).get(HomeViewModel::class.java)
 
         viewModel.popularMovies.observe(this,
-            Observer<List<ResultPopular>> { popularMovieDataList ->
+            Observer<List<MovieResult>> { popularMovieDataList ->
                 val homeScreenAdapter = PopularMovieAdapter(this)
                 homeScreenAdapter.setPopularMovies(popularMovieDataList)
                 popularMovieList.adapter = homeScreenAdapter
@@ -58,14 +57,14 @@ class MainActivity : AppCompatActivity() {
                 carouselView.setImageListener { position, imageView ->
                     if (null != imageView)
                         Glide.with(this@MainActivity)
-                            .load("https://image.tmdb.org/t/p/${Constants.BACKDROP_SIZE}${popularMovieDataList[position].posterPath}")
+                            .load("https://image.tmdb.org/t/p/${Constants.BACKDROP_SIZE}${popularMovieDataList[position].backdropPath}")
                             .into(imageView)
                 }
                 carouselView.pageCount = 5
             })
 
         viewModel.topMovies.observe(this,
-            Observer<List<ResultTopRated>> {
+            Observer<List<MovieResult>> {
                 val topRatedMoview = TopMovieAdapter(this, it)
                 top_rated_movie_list.adapter = topRatedMoview
                 topRatedMoview.notifyDataSetChanged()
