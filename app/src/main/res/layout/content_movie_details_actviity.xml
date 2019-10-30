@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".activity.MovieDetailsActivity"
+    tools:showIn="@layout/activity_movie_details_actviity">
+
+    <ImageView
+        android:id="@+id/backdrop_image_holder"
+        android:layout_width="match_parent"
+        android:layout_height="230dp"
+        android:fadingEdge="vertical"
+        android:layout_marginBottom="@dimen/generic_padding"
+        android:scaleType="fitCenter"
+        android:src="@drawable/backdrop_image" />
+
+    <TextView
+        android:id="@+id/movie_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/backdrop_image_holder"
+        android:layout_marginStart="@dimen/detail_screen_padding"
+        android:layout_marginBottom="@dimen/detail_screen_padding"
+        android:text="Title"
+        android:textSize="30sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/movie_desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/movie_title"
+        android:layout_marginStart="@dimen/detail_screen_padding"
+        android:layout_marginBottom="@dimen/detail_screen_padding"
+        android:text="During the 1980s, a failed stand-up comedian is driven insane and turns to a life of crime and chaos in Gotham City while becoming an infamous psychopathic crime figure."
+        android:textSize="18sp"
+        android:textStyle="italic" />
+
+</RelativeLayout>
