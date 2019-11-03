@@ -14,7 +14,7 @@ import com.movieboss.utils.showMovieDetails
 
 class PopularMovieAdapter(private val context : Context) : RecyclerView.Adapter<HomeScreenViewHolder>() {
 
-    lateinit var listOfMovieMovies : List<MovieResult>
+    var listOfMovieMovies : List<MovieResult> = ArrayList()
 
     fun setPopularMovies(movieMovies: List<MovieResult>) {
         listOfMovieMovies = movieMovies
@@ -38,7 +38,7 @@ class PopularMovieAdapter(private val context : Context) : RecyclerView.Adapter<
             .load("https://image.tmdb.org/t/p/w185${listOfMovieMovies[position].posterPath}")
             .into(holder.posterImage)
         holder.view.setOnClickListener {
-            val intent = showMovieDetails(listOfMovieMovies[position], context)
+            showMovieDetails(listOfMovieMovies[position], context)
         }
     }
 }

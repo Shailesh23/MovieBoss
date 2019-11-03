@@ -18,8 +18,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 class MoviesRequest {
 
     private val movieServer: MovieServer
-    private val pupularMovies = MutableLiveData<List<MovieResult>>()
-    private val topMovies = MutableLiveData<List<MovieResult>>()
+    private val popularMovies = MutableLiveData<java.util.ArrayList<MovieResult>>()
+    private val topMovies = MutableLiveData<ArrayList<MovieResult>>()
 
     init {
         val gson = GsonBuilder().setFieldNamingPolicy(
@@ -38,9 +38,9 @@ class MoviesRequest {
         movieServer = retrofit.create(MovieServer::class.java)
     }
 
-    fun getPopularMovies(): MutableLiveData<List<MovieResult>> {
+    fun getPopularMovies(moviePage: Int): MutableLiveData<ArrayList<MovieResult>> {
 
-        val call = movieServer.getPopularMovies()
+        val call = movieServer.getPopularMovies(moviePage)
 
         call.enqueue(object : Callback<MoviesInfoPopular> {
             override fun onFailure(call: Call<MoviesInfoPopular>, t: Throwable) {
@@ -52,17 +52,22 @@ class MoviesRequest {
                 response: Response<MoviesInfoPopular>
             ) {
                 if (response.isSuccessful) {
-                    pupularMovies.value = response.body()?.results
+                    val tempData = ArrayList<MovieResult>()
+                    if (popularMovies.value != null) {
+                        tempData.addAll(popularMovies.value!!)
+                    }
+                    tempData.addAll(response.body()?.results!!)
+                    popularMovies.value = tempData
                 }
             }
 
         })
 
-        return pupularMovies
+        return popularMovies
     }
 
-    fun getTopRatedMovies(): MutableLiveData<List<MovieResult>> {
-        val call = movieServer.getTopMovies()
+    fun getTopRatedMovies(moviePage : Int): MutableLiveData<ArrayList<MovieResult>> {
+        val call = movieServer.getTopMovies(moviePage)
 
         call.enqueue(object : Callback<MoviesInfoTopRated> {
             override fun onFailure(call: Call<MoviesInfoTopRated>, t: Throwable) {
@@ -73,8 +78,13 @@ class MoviesRequest {
                 call: Call<MoviesInfoTopRated>,
                 response: Response<MoviesInfoTopRated>
             ) {
-                if(response.isSuccessful) {
-                    topMovies.value = response.body()?.results
+                if (response.isSuccessful) {
+                    val tempData = ArrayList<MovieResult>()
+                    if (topMovies.value != null) {
+                        tempData.addAll(topMovies.value!!)
+                    }
+                    tempData.addAll(response.body()?.results!!)
+                    topMovies.value = tempData
                 }
             }
 
