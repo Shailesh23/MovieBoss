@@ -54,4 +54,7 @@ dependencies {
 
     //crousel
     implementation 'com.synnapps:carouselview:0.0.7'
+
+    //recycler slide animator
+    implementation 'jp.wasabeef:recyclerview-animators:3.0.0'
 }

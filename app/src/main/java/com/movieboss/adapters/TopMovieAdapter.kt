@@ -13,8 +13,12 @@ import com.movieboss.pojo.movies.MovieResult
 import com.movieboss.utils.Constants
 import com.movieboss.utils.showMovieDetails
 
-class TopMovieAdapter(private val context: Context, val topMovies : List<MovieResult>) : RecyclerView.Adapter<TopMovieViewHolder>() {
+class TopMovieAdapter(private val context: Context) : RecyclerView.Adapter<TopMovieViewHolder>() {
+    private var topMovies : List<MovieResult> = ArrayList()
 
+    fun setTopMovies(topMovies : List<MovieResult>) {
+        this.topMovies = topMovies
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TopMovieViewHolder {
         val view =
