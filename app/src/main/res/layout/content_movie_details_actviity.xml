@@ -14,8 +14,7 @@
         android:layout_height="230dp"
         android:fadingEdge="vertical"
         android:layout_marginBottom="@dimen/generic_padding"
-        android:scaleType="fitCenter"
-        android:src="@drawable/backdrop_image" />
+        android:scaleType="fitCenter" />
 
     <TextView
         android:id="@+id/movie_title"

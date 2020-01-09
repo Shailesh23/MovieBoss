@@ -9,7 +9,6 @@
     <ImageView
         android:id="@+id/poster_image"
         android:layout_width="185dp"
-        android:src="@drawable/movie_poster"
         android:layout_height="278dp"
         android:layout_marginBottom="@dimen/generic_padding"
         android:contentDescription="@string/each_movie_poster" />
