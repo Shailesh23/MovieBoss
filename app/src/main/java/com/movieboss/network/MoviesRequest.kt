@@ -1,11 +1,11 @@
 package com.movieboss.network
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.GsonBuilder
 import com.movieboss.pojo.movies.popular.Movies
 import com.movieboss.pojo.movies.MovieResult
+import com.movieboss.utils.Logs
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
@@ -43,7 +43,7 @@ class MoviesRequest {
 
         call.enqueue(object : Callback<Movies> {
             override fun onFailure(call: Call<Movies>, t: Throwable) {
-                Log.e("Error", t.message)
+                Logs.e("MoviesRequest", t.message ?: "")
             }
 
             override fun onResponse(
@@ -70,7 +70,7 @@ class MoviesRequest {
 
         call.enqueue(object : Callback<Movies> {
             override fun onFailure(call: Call<Movies>, t: Throwable) {
-                Log.e("Error", t.message)
+                Logs.e("MoviesRequest", t.message ?: "")
             }
 
             override fun onResponse(
