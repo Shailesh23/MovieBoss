@@ -4,9 +4,8 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.GsonBuilder
-import com.movieboss.pojo.movies.popular.MoviesInfoPopular
+import com.movieboss.pojo.movies.popular.Movies
 import com.movieboss.pojo.movies.MovieResult
-import com.movieboss.pojo.movies.toprated.MoviesInfoTopRated
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
@@ -42,14 +41,14 @@ class MoviesRequest {
 
         val call = movieServer.getPopularMovies(moviePage)
 
-        call.enqueue(object : Callback<MoviesInfoPopular> {
-            override fun onFailure(call: Call<MoviesInfoPopular>, t: Throwable) {
+        call.enqueue(object : Callback<Movies> {
+            override fun onFailure(call: Call<Movies>, t: Throwable) {
                 Log.e("Error", t.message)
             }
 
             override fun onResponse(
-                call: Call<MoviesInfoPopular>,
-                response: Response<MoviesInfoPopular>
+                call: Call<Movies>,
+                response: Response<Movies>
             ) {
                 if (response.isSuccessful) {
                     val tempData = ArrayList<MovieResult>()
@@ -69,14 +68,14 @@ class MoviesRequest {
     fun getTopRatedMovies(moviePage : Int): MutableLiveData<ArrayList<MovieResult>> {
         val call = movieServer.getTopMovies(moviePage)
 
-        call.enqueue(object : Callback<MoviesInfoTopRated> {
-            override fun onFailure(call: Call<MoviesInfoTopRated>, t: Throwable) {
+        call.enqueue(object : Callback<Movies> {
+            override fun onFailure(call: Call<Movies>, t: Throwable) {
                 Log.e("Error", t.message)
             }
 
             override fun onResponse(
-                call: Call<MoviesInfoTopRated>,
-                response: Response<MoviesInfoTopRated>
+                call: Call<Movies>,
+                response: Response<Movies>
             ) {
                 if (response.isSuccessful) {
                     val tempData = ArrayList<MovieResult>()

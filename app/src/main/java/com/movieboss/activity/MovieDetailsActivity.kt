@@ -31,5 +31,4 @@ class MovieDetailsActivity : AppCompatActivity() {
         movie_title.text = intent?.getStringExtra(Constants.MOVIE_TITLE_KEY)
         movie_desc.text = intent?.getStringExtra(Constants.MOVIE_TITLE_DESC_KEY)
     }
-
 }
