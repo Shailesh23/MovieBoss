@@ -22,7 +22,7 @@ class MovieDetailsActivity : AppCompatActivity() {
 
         setupUI()
         fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+            Snackbar.make(view, "Added to your favorites", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show()
         }
     }
