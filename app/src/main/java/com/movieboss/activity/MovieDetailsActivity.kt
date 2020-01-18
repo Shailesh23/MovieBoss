@@ -6,14 +6,17 @@ import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.movieboss.R
+import com.movieboss.pojo.movies.MovieResult
 import com.movieboss.utils.Constants
+import com.movieboss.utils.Constants.Companion.MOVIE_KEY
 
 import kotlinx.android.synthetic.main.activity_movie_details_actviity.*
 import kotlinx.android.synthetic.main.content_movie_details_actviity.*
+import java.util.*
 
 class MovieDetailsActivity : AppCompatActivity() {
 
-    var movieName: String? = null
+    var movie: MovieResult? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,19 +31,25 @@ class MovieDetailsActivity : AppCompatActivity() {
     }
 
     private fun setupUI() {
-        Glide.with(this)
-            .load(
-                "https://image.tmdb.org/t/p/${Constants.BACKDROP_SIZE}${intent?.getStringExtra(
-                    Constants.MOVIE_BACKDROP_PATH
-                )}"
-            )
-            .into(backdrop_image_holder)
-        movieName = intent?.getStringExtra(Constants.MOVIE_TITLE_KEY)
-        movie_title.text = movieName
-        supportActionBar?.title = movieName
+        movie = intent?.getParcelableExtra(MOVIE_KEY)
+        if(movie != null) {
+            Glide.with(this)
+                .load(
+                    "https://image.tmdb.org/t/p/${Constants.BACKDROP_SIZE}${movie?.backdropPath}"
+                )
+                .into(backdrop_image_holder)
 
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        movie_desc.text = intent?.getStringExtra(Constants.MOVIE_TITLE_DESC_KEY)
+            supportActionBar?.title = movie?.title
+            supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+            movie_desc.text = movie?.overview
+            vote_count.text = movie?.voteCount.toString()
+            language_supported.text = movie?.originalLanguage?.toUpperCase(Locale.getDefault())
+            release_date.text = movie?.releaseDate
+
+        } else {
+            //TODO show error
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
