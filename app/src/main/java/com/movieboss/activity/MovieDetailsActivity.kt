@@ -36,6 +36,17 @@ class MovieDetailsActivity : AppCompatActivity() {
         }
     }
 
+    //TODO : show image behind status bar
+//    override fun onResume() {
+//        super.onResume()
+//        window.decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+//                // Set the content to appear under the system bars so that the
+//                // content doesn't resize when the system bars hide and show.
+//                or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+//                or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION)
+//        supportActionBar?.hide()
+//    }
+
     private fun setupUI() {
         movie = intent?.getParcelableExtra(MOVIE_KEY)
         if (movie != null) {
@@ -44,9 +55,6 @@ class MovieDetailsActivity : AppCompatActivity() {
                     "https://image.tmdb.org/t/p/${Constants.BACKDROP_SIZE}${movie?.posterPath}"
                 )
                 .into(backdrop_image_holder)
-
-            supportActionBar?.title = movie?.title
-            supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
             movie_desc.text = movie?.overview
             vote_count.text = movie?.voteCount.toString()
@@ -64,16 +72,7 @@ class MovieDetailsActivity : AppCompatActivity() {
             }
 
         } else {
-            //TODO show error
-        }
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return if (item.itemId == android.R.id.home) {
-            onBackPressed()
-            true
-        } else {
-            super.onOptionsItemSelected(item)
+            //TODO show movie not found error
         }
     }
 }
