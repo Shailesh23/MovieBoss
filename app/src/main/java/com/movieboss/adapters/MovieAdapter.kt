@@ -13,11 +13,11 @@ import com.movieboss.pojo.movies.MovieResult
 import com.movieboss.utils.Constants
 import com.movieboss.utils.showMovieDetails
 
-class PopularMovieAdapter(private val context : Context) : RecyclerView.Adapter<HomeScreenViewHolder>() {
+class MovieAdapter(private val context : Context) : RecyclerView.Adapter<HomeScreenViewHolder>() {
 
     var listOfMovieMovies : List<MovieResult> = ArrayList()
 
-    fun setPopularMovies(movieMovies: List<MovieResult>) {
+    fun setMovies(movieMovies: List<MovieResult>) {
         listOfMovieMovies = movieMovies
     }
 

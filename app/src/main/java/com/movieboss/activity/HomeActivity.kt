@@ -11,8 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.movieboss.R
-import com.movieboss.adapters.PopularMovieAdapter
-import com.movieboss.adapters.TopMovieAdapter
+import com.movieboss.adapters.MovieAdapter
 import com.movieboss.pojo.movies.MovieResult
 import com.movieboss.utils.Constants
 import com.movieboss.viewmodels.HomeViewModel
@@ -43,14 +42,14 @@ class HomeActivity : AppCompatActivity(), ViewCallback {
 
         //TODO : check out movie list animations
         popularMovieList.layoutManager = popularMovieLayoutManager
-        val homeScreenAdapter = PopularMovieAdapter(this)
+        val homeScreenAdapter = MovieAdapter(this)
         popularMovieList.adapter = homeScreenAdapter
 
         val topMovieLayoutManager = LinearLayoutManager(this)
         topMovieLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
         top_rated_movie_list.layoutManager = topMovieLayoutManager
         top_rated_movie_list.itemAnimator = SlideInUpAnimator()
-        val topRatedMovie = TopMovieAdapter(this)
+        val topRatedMovie = MovieAdapter(this)
         top_rated_movie_list.adapter = topRatedMovie
 
 
@@ -58,7 +57,7 @@ class HomeActivity : AppCompatActivity(), ViewCallback {
 
         viewModel.popularMovies.observe(this,
             Observer<List<MovieResult>> { popularMovieDataList ->
-                homeScreenAdapter.setPopularMovies(popularMovieDataList)
+                homeScreenAdapter.setMovies(popularMovieDataList)
                 homeScreenAdapter.notifyDataSetChanged()
 
                 carouselView.setImageListener { position, imageView ->
@@ -73,7 +72,7 @@ class HomeActivity : AppCompatActivity(), ViewCallback {
 
         viewModel.topMovies.observe(this,
             Observer<List<MovieResult>> {
-                topRatedMovie.setTopMovies(it)
+                topRatedMovie.setMovies(it)
                 topRatedMovie.notifyDataSetChanged()
 
                 hidePopularMovieProgressBar(1)
