@@ -1,6 +1,6 @@
 package com.movieboss.network
 
-import com.movieboss.pojo.movies.popular.Movies
+import com.movieboss.pojo.movies.Movies
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query

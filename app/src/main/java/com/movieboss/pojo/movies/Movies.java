@@ -1,5 +1,5 @@
 
-package com.movieboss.pojo.movies.popular;
+package com.movieboss.pojo.movies;
 
 import java.util.ArrayList;
 import com.google.gson.annotations.Expose;
