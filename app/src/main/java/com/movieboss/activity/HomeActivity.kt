@@ -22,7 +22,7 @@ import jp.wasabeef.recyclerview.animators.SlideInUpAnimator
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
 
-class MainActivity : AppCompatActivity(), ViewCallback {
+class HomeActivity : AppCompatActivity(), ViewCallback {
     //TODO add data binding
     lateinit var viewModel: HomeViewModel
 
@@ -63,7 +63,7 @@ class MainActivity : AppCompatActivity(), ViewCallback {
 
                 carouselView.setImageListener { position, imageView ->
                     if (null != imageView)
-                        Glide.with(this@MainActivity)
+                        Glide.with(this@HomeActivity)
                             .load("https://image.tmdb.org/t/p/${Constants.BACKDROP_SIZE}${popularMovieDataList[position].backdropPath}")
                             .into(imageView)
                 }
