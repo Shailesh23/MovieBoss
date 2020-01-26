@@ -44,9 +44,8 @@ class PopularMovieAdapter(private val context : Context) : RecyclerView.Adapter<
     }
 }
 
-class HomeScreenViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+class HomeScreenViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
     val posterImage : ImageView = view.findViewById(R.id.poster_image)
     val posterTitle : TextView = view.findViewById(R.id.title)
-    val view = view
 }
 
