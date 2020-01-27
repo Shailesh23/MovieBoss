@@ -1,5 +1,6 @@
 package com.movieboss.activity
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
@@ -10,6 +11,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.facebook.stetho.Stetho
 import com.movieboss.R
 import com.movieboss.adapters.MovieAdapter
 import com.movieboss.pojo.movies.MovieResult
@@ -31,6 +33,8 @@ class HomeActivity : AppCompatActivity(), ViewCallback {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
+
+        Stetho.initializeWithDefaults(applicationContext)
 
         supportActionBar?.title = resources.getString(R.string.home_screen_title)
 
@@ -94,6 +98,12 @@ class HomeActivity : AppCompatActivity(), ViewCallback {
         // as you specify a parent activity in AndroidManifest.xml.
         return when (item.itemId) {
             R.id.action_search -> true
+
+            R.id.action_fav -> {
+                val intent = Intent(this, FavoriteActivity::class.java)
+                startActivity(intent)
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }

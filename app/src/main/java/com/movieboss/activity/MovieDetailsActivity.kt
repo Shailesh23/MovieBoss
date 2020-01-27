@@ -9,12 +9,14 @@ import android.view.ViewOutlineProvider
 import androidx.annotation.RequiresApi
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.movieboss.R
 import com.movieboss.pojo.movies.MovieResult
 import com.movieboss.utils.Constants
 import com.movieboss.utils.Constants.Companion.MOVIE_KEY
+import com.movieboss.viewmodels.MovieDetailsViewModel
 
 import kotlinx.android.synthetic.main.activity_movie_details_actviity.*
 import kotlinx.android.synthetic.main.content_movie_details_actviity.*
@@ -22,17 +24,24 @@ import java.util.*
 
 class MovieDetailsActivity : AppCompatActivity() {
 
-    var movie: MovieResult? = null
+    private var movie: MovieResult? = null
+    lateinit var movieDetailsViewModel : MovieDetailsViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movie_details_actviity)
         setSupportActionBar(toolbar)
 
+        movieDetailsViewModel = ViewModelProviders.of(this).get(MovieDetailsViewModel::class.java)
+
         setupUI()
         fab.setOnClickListener { view ->
-            Snackbar.make(view, "Added to your favorites", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
+            if(movie != null) {
+                Snackbar.make(view, "Added to your favorites", Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show()
+                movieDetailsViewModel.saveMovie(movie!!, this.application)
+                movieDetailsViewModel.getMovies(this.application)
+            }
         }
     }
 
