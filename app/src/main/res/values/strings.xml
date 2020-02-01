@@ -6,4 +6,9 @@
     <string name="top_rated_movies">Top Movies</string>
     <string name="each_movie_poster">each movie poster</string>
     <string name="title_activity_movie_details_actviity">MovieDetailsActviity</string>
+    <string name="favorites">Favorites</string>
+
+    <string name="title_activity_favorite">FavoriteActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
 </resources>

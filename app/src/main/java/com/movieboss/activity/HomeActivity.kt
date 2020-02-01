@@ -1,5 +1,6 @@
 package com.movieboss.activity
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
@@ -10,9 +11,9 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.facebook.stetho.Stetho
 import com.movieboss.R
-import com.movieboss.adapters.PopularMovieAdapter
-import com.movieboss.adapters.TopMovieAdapter
+import com.movieboss.adapters.MovieAdapter
 import com.movieboss.pojo.movies.MovieResult
 import com.movieboss.utils.Constants
 import com.movieboss.viewmodels.HomeViewModel
@@ -22,7 +23,7 @@ import jp.wasabeef.recyclerview.animators.SlideInUpAnimator
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
 
-class MainActivity : AppCompatActivity(), ViewCallback {
+class HomeActivity : AppCompatActivity(), ViewCallback {
     //TODO add data binding
     lateinit var viewModel: HomeViewModel
 
@@ -32,6 +33,8 @@ class MainActivity : AppCompatActivity(), ViewCallback {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
+
+        Stetho.initializeWithDefaults(applicationContext)
 
         supportActionBar?.title = resources.getString(R.string.home_screen_title)
 
@@ -43,14 +46,14 @@ class MainActivity : AppCompatActivity(), ViewCallback {
 
         //TODO : check out movie list animations
         popularMovieList.layoutManager = popularMovieLayoutManager
-        val homeScreenAdapter = PopularMovieAdapter(this)
+        val homeScreenAdapter = MovieAdapter(this)
         popularMovieList.adapter = homeScreenAdapter
 
         val topMovieLayoutManager = LinearLayoutManager(this)
         topMovieLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
         top_rated_movie_list.layoutManager = topMovieLayoutManager
         top_rated_movie_list.itemAnimator = SlideInUpAnimator()
-        val topRatedMovie = TopMovieAdapter(this)
+        val topRatedMovie = MovieAdapter(this)
         top_rated_movie_list.adapter = topRatedMovie
 
 
@@ -58,12 +61,12 @@ class MainActivity : AppCompatActivity(), ViewCallback {
 
         viewModel.popularMovies.observe(this,
             Observer<List<MovieResult>> { popularMovieDataList ->
-                homeScreenAdapter.setPopularMovies(popularMovieDataList)
+                homeScreenAdapter.setMovies(popularMovieDataList)
                 homeScreenAdapter.notifyDataSetChanged()
 
                 carouselView.setImageListener { position, imageView ->
                     if (null != imageView)
-                        Glide.with(this@MainActivity)
+                        Glide.with(this@HomeActivity)
                             .load("https://image.tmdb.org/t/p/${Constants.BACKDROP_SIZE}${popularMovieDataList[position].backdropPath}")
                             .into(imageView)
                 }
@@ -73,7 +76,7 @@ class MainActivity : AppCompatActivity(), ViewCallback {
 
         viewModel.topMovies.observe(this,
             Observer<List<MovieResult>> {
-                topRatedMovie.setTopMovies(it)
+                topRatedMovie.setMovies(it)
                 topRatedMovie.notifyDataSetChanged()
 
                 hidePopularMovieProgressBar(1)
@@ -95,6 +98,12 @@ class MainActivity : AppCompatActivity(), ViewCallback {
         // as you specify a parent activity in AndroidManifest.xml.
         return when (item.itemId) {
             R.id.action_search -> true
+
+            R.id.action_fav -> {
+                val intent = Intent(this, FavoriteActivity::class.java)
+                startActivity(intent)
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }

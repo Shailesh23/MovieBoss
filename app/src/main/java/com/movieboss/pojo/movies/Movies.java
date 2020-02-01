@@ -1,12 +1,11 @@
 
-package com.movieboss.pojo.movies.popular;
+package com.movieboss.pojo.movies;
 
 import java.util.ArrayList;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.movieboss.pojo.movies.MovieResult;
 
-public class MoviesInfoPopular {
+public class Movies {
 
     @SerializedName("page")
     @Expose

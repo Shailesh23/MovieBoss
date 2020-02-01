@@ -1,12 +1,11 @@
 package com.movieboss.network
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.GsonBuilder
-import com.movieboss.pojo.movies.popular.MoviesInfoPopular
+import com.movieboss.pojo.movies.Movies
 import com.movieboss.pojo.movies.MovieResult
-import com.movieboss.pojo.movies.toprated.MoviesInfoTopRated
+import com.movieboss.utils.Logs
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
@@ -18,8 +17,6 @@ import retrofit2.converter.gson.GsonConverterFactory
 class MoviesRequest {
 
     private val movieServer: MovieServer
-    private val popularMovies = MutableLiveData<java.util.ArrayList<MovieResult>>()
-    private val topMovies = MutableLiveData<ArrayList<MovieResult>>()
 
     init {
         val gson = GsonBuilder().setFieldNamingPolicy(
@@ -38,18 +35,20 @@ class MoviesRequest {
         movieServer = retrofit.create(MovieServer::class.java)
     }
 
-    fun getPopularMovies(moviePage: Int): MutableLiveData<ArrayList<MovieResult>> {
-
+    fun getPopularMovies(
+        moviePage: Int,
+        popularMovies: MutableLiveData<java.util.ArrayList<MovieResult>>
+    ) {
         val call = movieServer.getPopularMovies(moviePage)
 
-        call.enqueue(object : Callback<MoviesInfoPopular> {
-            override fun onFailure(call: Call<MoviesInfoPopular>, t: Throwable) {
-                Log.e("Error", t.message)
+        call.enqueue(object : Callback<Movies> {
+            override fun onFailure(call: Call<Movies>, t: Throwable) {
+                Logs.e("MoviesRequest", t.message ?: "")
             }
 
             override fun onResponse(
-                call: Call<MoviesInfoPopular>,
-                response: Response<MoviesInfoPopular>
+                call: Call<Movies>,
+                response: Response<Movies>
             ) {
                 if (response.isSuccessful) {
                     val tempData = ArrayList<MovieResult>()
@@ -62,21 +61,21 @@ class MoviesRequest {
             }
 
         })
-
-        return popularMovies
     }
 
-    fun getTopRatedMovies(moviePage : Int): MutableLiveData<ArrayList<MovieResult>> {
+    fun getTopRatedMovies(
+        moviePage: Int,
+        topMovies: MutableLiveData<ArrayList<MovieResult>>
+    ): MutableLiveData<ArrayList<MovieResult>> {
         val call = movieServer.getTopMovies(moviePage)
-
-        call.enqueue(object : Callback<MoviesInfoTopRated> {
-            override fun onFailure(call: Call<MoviesInfoTopRated>, t: Throwable) {
-                Log.e("Error", t.message)
+        call.enqueue(object : Callback<Movies> {
+            override fun onFailure(call: Call<Movies>, t: Throwable) {
+                Logs.e("MoviesRequest", t.message ?: "")
             }
 
             override fun onResponse(
-                call: Call<MoviesInfoTopRated>,
-                response: Response<MoviesInfoTopRated>
+                call: Call<Movies>,
+                response: Response<Movies>
             ) {
                 if (response.isSuccessful) {
                     val tempData = ArrayList<MovieResult>()
