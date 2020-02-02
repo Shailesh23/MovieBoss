@@ -16,9 +16,9 @@
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
         <activity
             android:name=".activity.FavoriteActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_favorite"
-            android:theme="@style/FullscreenTheme"></activity>
+            android:parentActivityName=".activity.HomeActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".activity.MovieDetailsActivity"
             android:label="@string/title_activity_movie_details_actviity"

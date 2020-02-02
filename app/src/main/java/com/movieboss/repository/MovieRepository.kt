@@ -1,6 +1,7 @@
 package com.movieboss.repository
 
 import android.content.Context
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.movieboss.db.MovieDatabase
 import com.movieboss.network.MoviesRequest
@@ -13,27 +14,32 @@ class MovieRepository {
     private val popularMovies = MutableLiveData<java.util.ArrayList<MovieResult>>()
     private val topMovies = MutableLiveData<ArrayList<MovieResult>>()
 
-    fun fetchPopularMovies(page : Int) : MutableLiveData<ArrayList<MovieResult>> {
+    fun fetchPopularMovies(page: Int): MutableLiveData<ArrayList<MovieResult>> {
         moviesRequest.getPopularMovies(page, popularMovies)
         return popularMovies
     }
 
-    fun fetchTopMovies(page : Int) : MutableLiveData<ArrayList<MovieResult>> {
+    fun fetchTopMovies(page: Int): MutableLiveData<ArrayList<MovieResult>> {
         moviesRequest.getTopRatedMovies(page, topMovies)
         return topMovies
     }
 
-    fun saveFavoriteMovie(movie : MovieResult, context: Context) {
+    fun saveFavoriteMovie(movie: MovieResult, context: Context) {
         GlobalScope.launch {
             val movieDb = MovieDatabase.getMovieDbInstance(context)
             movieDb?.insertMovie(movie)
         }
     }
 
-    fun getFavoriteMovies(context: Context) {
+    fun getFavoriteMovies(context: Context): LiveData<List<MovieResult>>? {
+        val movieDb = MovieDatabase.getMovieDbInstance(context)
+        return movieDb?.getAllFavMovies()
+    }
+
+    fun removeFavouriteMovie(movie : MovieResult, context: Context) {
         GlobalScope.launch {
             val movieDb = MovieDatabase.getMovieDbInstance(context)
-            movieDb?.getAllFavMovies()
+            movieDb?.deleteMovie(movie)
         }
     }
 }

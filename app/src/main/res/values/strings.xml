@@ -11,4 +11,7 @@
     <string name="title_activity_favorite">FavoriteActivity</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="poster_image_for_the_favourite_grid_layout">poster image for the favourite grid layout</string>
+    <string name="favourite_icon_button">favourite icon button</string>
+    <string name="add_favourite_movie_first">Add Favourite Movie First</string>
 </resources>
