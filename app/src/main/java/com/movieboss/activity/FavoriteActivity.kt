@@ -17,6 +17,7 @@ class FavoriteActivity : AppCompatActivity(), MovieClickListener {
 
     private lateinit var favouriteViewModel : FavouriteViewModel
     private val favouriteMovieAdapter = FavouriteMovieAdapter(this)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -29,6 +30,7 @@ class FavoriteActivity : AppCompatActivity(), MovieClickListener {
             Observer<List<MovieResult>> {
                 if(it.isEmpty()) {
                     no_fav_text.visibility = View.VISIBLE
+                    favorite_list.visibility = View.GONE
                 } else {
                     favouriteMovieAdapter.setFavourite(it)
                     favouriteMovieAdapter.notifyDataSetChanged()
@@ -43,5 +45,4 @@ class FavoriteActivity : AppCompatActivity(), MovieClickListener {
     override fun movieSelected(movie: MovieResult) {
         favouriteViewModel.removeFavoriteMovie(movie)
     }
-
 }

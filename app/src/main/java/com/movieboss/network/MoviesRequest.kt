@@ -63,6 +63,34 @@ class MoviesRequest {
         })
     }
 
+    fun getUpComingMovies(
+        moviePage: Int,
+        upComingMovies: MutableLiveData<java.util.ArrayList<MovieResult>>
+    ) {
+        val call = movieServer.getUpComingMovies(moviePage)
+
+        call.enqueue(object : Callback<Movies> {
+            override fun onFailure(call: Call<Movies>, t: Throwable) {
+                Logs.e("MoviesRequest", t.message ?: "")
+            }
+
+            override fun onResponse(
+                call: Call<Movies>,
+                response: Response<Movies>
+            ) {
+                if (response.isSuccessful) {
+                    val tempData = ArrayList<MovieResult>()
+                    if (upComingMovies.value != null) {
+                        tempData.addAll(upComingMovies.value!!)
+                    }
+                    tempData.addAll(response.body()?.results!!)
+                    upComingMovies.value = tempData
+                }
+            }
+
+        })
+    }
+
     fun getTopRatedMovies(
         moviePage: Int,
         topMovies: MutableLiveData<ArrayList<MovieResult>>

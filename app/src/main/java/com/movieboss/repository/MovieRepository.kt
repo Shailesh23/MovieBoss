@@ -13,6 +13,7 @@ class MovieRepository {
     private val moviesRequest = MoviesRequest() //TODO; DI this
     private val popularMovies = MutableLiveData<java.util.ArrayList<MovieResult>>()
     private val topMovies = MutableLiveData<ArrayList<MovieResult>>()
+    private val upComingMovies = MutableLiveData<ArrayList<MovieResult>>()
 
     fun fetchPopularMovies(page: Int): MutableLiveData<ArrayList<MovieResult>> {
         moviesRequest.getPopularMovies(page, popularMovies)
@@ -22,6 +23,11 @@ class MovieRepository {
     fun fetchTopMovies(page: Int): MutableLiveData<ArrayList<MovieResult>> {
         moviesRequest.getTopRatedMovies(page, topMovies)
         return topMovies
+    }
+
+    fun fetchUpComingMovies(page: Int): MutableLiveData<ArrayList<MovieResult>> {
+        moviesRequest.getUpComingMovies(page, upComingMovies)
+        return upComingMovies
     }
 
     fun saveFavoriteMovie(movie: MovieResult, context: Context) {
