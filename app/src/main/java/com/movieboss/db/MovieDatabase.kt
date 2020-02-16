@@ -10,7 +10,6 @@ import com.movieboss.utils.MovieListConverter
 
 @Database(entities = arrayOf(MovieResult::class), version = 1)
 abstract class MovieDatabase : RoomDatabase() {
-    //TODO add context through dagger
     abstract fun movieDao(): MovieDao
 
     companion object {

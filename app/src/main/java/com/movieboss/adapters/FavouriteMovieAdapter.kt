@@ -36,7 +36,7 @@ class FavouriteMovieAdapter constructor(val movieClickListener: MovieClickListen
     override fun onBindViewHolder(holder: FavouriteMovieViewHolder, position: Int) {
         val context = holder.poster.context
         Glide.with(context)
-            .load("https://image.tmdb.org/t/p/${Constants.POSTER_SIZE}${favouriteMovies[position].posterPath}")
+            .load("${Constants.BASE_URL}${Constants.POSTER_SIZE}${favouriteMovies[position].posterPath}")
             .into(holder.poster)
 
         holder.poster.setOnClickListener {

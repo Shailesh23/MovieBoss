@@ -3,17 +3,22 @@ package com.movieboss.repository
 import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.movieboss.db.MovieDao
 import com.movieboss.db.MovieDatabase
 import com.movieboss.network.MoviesRequest
 import com.movieboss.pojo.movies.MovieResult
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import org.koin.core.KoinComponent
+import org.koin.core.get
+import org.koin.core.inject
 
-class MovieRepository {
-    private val moviesRequest = MoviesRequest() //TODO; DI this
+class MovieRepository : KoinComponent {
+    private val moviesRequest = MoviesRequest()
     private val popularMovies = MutableLiveData<java.util.ArrayList<MovieResult>>()
     private val topMovies = MutableLiveData<ArrayList<MovieResult>>()
     private val upComingMovies = MutableLiveData<ArrayList<MovieResult>>()
+    private val movieDb : MovieDao by inject()
 
     fun fetchPopularMovies(page: Int): MutableLiveData<ArrayList<MovieResult>> {
         moviesRequest.getPopularMovies(page, popularMovies)
@@ -32,20 +37,17 @@ class MovieRepository {
 
     fun saveFavoriteMovie(movie: MovieResult, context: Context) {
         GlobalScope.launch {
-            val movieDb = MovieDatabase.getMovieDbInstance(context)
-            movieDb?.insertMovie(movie)
+            movieDb.insertMovie(movie)
         }
     }
 
     fun getFavoriteMovies(context: Context): LiveData<List<MovieResult>>? {
-        val movieDb = MovieDatabase.getMovieDbInstance(context)
-        return movieDb?.getAllFavMovies()
+        return movieDb.getAllFavMovies()
     }
 
     fun removeFavouriteMovie(movie : MovieResult, context: Context) {
         GlobalScope.launch {
-            val movieDb = MovieDatabase.getMovieDbInstance(context)
-            movieDb?.deleteMovie(movie)
+            movieDb.deleteMovie(movie)
         }
     }
 }
