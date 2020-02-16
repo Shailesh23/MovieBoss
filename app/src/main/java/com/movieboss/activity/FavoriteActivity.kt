@@ -12,10 +12,11 @@ import com.movieboss.adapters.FavouriteMovieAdapter
 import com.movieboss.pojo.movies.MovieResult
 import com.movieboss.viewmodels.FavouriteViewModel
 import kotlinx.android.synthetic.main.activity_favorite.*
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class FavoriteActivity : AppCompatActivity(), MovieClickListener {
 
-    private lateinit var favouriteViewModel : FavouriteViewModel
+    private val favouriteViewModel by viewModel<FavouriteViewModel>()
     private val favouriteMovieAdapter = FavouriteMovieAdapter(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,10 +26,9 @@ class FavoriteActivity : AppCompatActivity(), MovieClickListener {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.hide()
 
-        favouriteViewModel = ViewModelProviders.of(this).get(FavouriteViewModel::class.java)
         favouriteViewModel.favouriteMovies?.observe(this,
             Observer<List<MovieResult>> {
-                if(it.isEmpty()) {
+                if (it.isEmpty()) {
                     no_fav_text.visibility = View.VISIBLE
                     favorite_list.visibility = View.GONE
                 } else {
@@ -39,7 +39,8 @@ class FavoriteActivity : AppCompatActivity(), MovieClickListener {
             })
 
         favorite_list.adapter = favouriteMovieAdapter
-        favorite_list.layoutManager = StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL)
+        favorite_list.layoutManager =
+            StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL)
     }
 
     override fun movieSelected(movie: MovieResult) {

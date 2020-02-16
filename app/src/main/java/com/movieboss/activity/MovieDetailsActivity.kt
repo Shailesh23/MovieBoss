@@ -20,27 +20,26 @@ import com.movieboss.viewmodels.MovieDetailsViewModel
 
 import kotlinx.android.synthetic.main.activity_movie_details_actviity.*
 import kotlinx.android.synthetic.main.content_movie_details_actviity.*
+import org.koin.android.viewmodel.ext.android.viewModel
 import java.util.*
 
 class MovieDetailsActivity : AppCompatActivity() {
 
     private var movie: MovieResult? = null
-    lateinit var movieDetailsViewModel : MovieDetailsViewModel
+    private val movieDetailsViewModel by viewModel<MovieDetailsViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movie_details_actviity)
         setSupportActionBar(toolbar)
 
-        movieDetailsViewModel = ViewModelProviders.of(this).get(MovieDetailsViewModel::class.java)
-
         setupUI()
         fab.setOnClickListener { view ->
             if(movie != null) {
                 Snackbar.make(view, "Added to your favorites", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show()
-                movieDetailsViewModel.saveMovie(movie!!, this.application)
-                movieDetailsViewModel.getMovies(this.application)
+                movieDetailsViewModel.saveMovie(movie!!)
+                movieDetailsViewModel.getMovies()
             }
         }
     }

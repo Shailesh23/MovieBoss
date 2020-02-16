@@ -6,13 +6,15 @@ import androidx.lifecycle.MutableLiveData
 import com.movieboss.network.MoviesRequest
 import com.movieboss.pojo.movies.MovieResult
 import com.movieboss.repository.MovieRepository
+import org.koin.core.KoinComponent
+import org.koin.core.inject
 
-class HomeViewModel(application: Application) : AndroidViewModel(application) {
+class HomeViewModel(application: Application) : AndroidViewModel(application), KoinComponent {
 
     private var popularMovieRequestPage = 1
     private var topMovieRequestPage = 1
     private var upComingMovieRequestPage = 1
-    private val moviesRepo = MovieRepository()
+    private val moviesRepo by inject<MovieRepository>()
 
     val popularMovies : MutableLiveData<ArrayList<MovieResult>> = loadPopularMovies()
     val topMovies : MutableLiveData<ArrayList<MovieResult>> = loadTopMovies()

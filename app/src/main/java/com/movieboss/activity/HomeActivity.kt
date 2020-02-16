@@ -22,10 +22,11 @@ import jp.wasabeef.recyclerview.animators.SlideInUpAnimator
 
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class HomeActivity : AppCompatActivity(), ViewCallback {
     //TODO add data binding
-    lateinit var viewModel: HomeViewModel
+    private val viewModel by viewModel<HomeViewModel>()
 
     lateinit var carouselView: CarouselView
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,8 +54,6 @@ class HomeActivity : AppCompatActivity(), ViewCallback {
         up_coming_movie_list.adapter = upComingMovieAdapter
         val upComingMovieLayoutManager = getHorizontalLayoutManager()
         up_coming_movie_list.layoutManager = upComingMovieLayoutManager
-
-        viewModel = ViewModelProviders.of(this).get(HomeViewModel::class.java)
 
         viewModel.popularMovies.observe(this,
             Observer<List<MovieResult>> { popularMovieDataList ->

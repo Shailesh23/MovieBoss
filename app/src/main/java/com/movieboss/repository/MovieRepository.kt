@@ -35,17 +35,17 @@ class MovieRepository : KoinComponent {
         return upComingMovies
     }
 
-    fun saveFavoriteMovie(movie: MovieResult, context: Context) {
+    fun saveFavoriteMovie(movie: MovieResult) {
         GlobalScope.launch {
             movieDb.insertMovie(movie)
         }
     }
 
-    fun getFavoriteMovies(context: Context): LiveData<List<MovieResult>>? {
+    fun getFavoriteMovies(): LiveData<List<MovieResult>>? {
         return movieDb.getAllFavMovies()
     }
 
-    fun removeFavouriteMovie(movie : MovieResult, context: Context) {
+    fun removeFavouriteMovie(movie : MovieResult) {
         GlobalScope.launch {
             movieDb.deleteMovie(movie)
         }
