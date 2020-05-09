@@ -5,6 +5,7 @@ import com.movieboss.repository.MovieRepository
 import com.movieboss.viewmodels.FavouriteViewModel
 import com.movieboss.viewmodels.HomeViewModel
 import com.movieboss.viewmodels.MovieDetailsViewModel
+import com.movieboss.viewmodels.SearchViewModel
 import org.koin.android.ext.koin.androidApplication
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.viewmodel.dsl.viewModel
@@ -15,5 +16,6 @@ val appModule = module {
     viewModel { FavouriteViewModel(androidApplication()) }
     viewModel { HomeViewModel(androidApplication()) }
     viewModel { MovieDetailsViewModel(androidApplication()) }
+    viewModel { SearchViewModel(androidApplication()) }
     single {  MovieRepository() }
 }

@@ -18,7 +18,12 @@ class MovieRepository : KoinComponent {
     private val popularMovies = MutableLiveData<java.util.ArrayList<MovieResult>>()
     private val topMovies = MutableLiveData<ArrayList<MovieResult>>()
     private val upComingMovies = MutableLiveData<ArrayList<MovieResult>>()
+    private val searchResults = MutableLiveData<ArrayList<MovieResult>>()
     private val movieDb : MovieDao by inject()
+
+    fun getSearchResults(): MutableLiveData<ArrayList<MovieResult>> {
+        return searchResults
+    }
 
     fun fetchPopularMovies(page: Int): MutableLiveData<ArrayList<MovieResult>> {
         moviesRequest.getPopularMovies(page, popularMovies)
@@ -43,6 +48,11 @@ class MovieRepository : KoinComponent {
 
     fun getFavoriteMovies(): LiveData<List<MovieResult>>? {
         return movieDb.getAllFavMovies()
+    }
+
+
+    fun searchMovies(searchParams : String): MutableLiveData<ArrayList<MovieResult>> {
+        return moviesRequest.getSearchResults(searchParams, searchResults)
     }
 
     fun removeFavouriteMovie(movie : MovieResult) {
