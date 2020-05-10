@@ -4,20 +4,18 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.movieboss.MovieClickListener
 import com.movieboss.R
-import com.movieboss.adapters.FavouriteMovieAdapter
+import com.movieboss.adapters.GridMovieAdapter
 import com.movieboss.pojo.movies.MovieResult
 import com.movieboss.viewmodels.FavouriteViewModel
 import kotlinx.android.synthetic.main.activity_favorite.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class FavoriteActivity : AppCompatActivity(), MovieClickListener {
-
     private val favouriteViewModel by viewModel<FavouriteViewModel>()
-    private val favouriteMovieAdapter = FavouriteMovieAdapter(this)
+    private val gridMovieAdapter = GridMovieAdapter(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,19 +25,19 @@ class FavoriteActivity : AppCompatActivity(), MovieClickListener {
         supportActionBar?.hide()
 
         favouriteViewModel.favouriteMovies?.observe(this,
-            Observer<List<MovieResult>> {
+            Observer {
                 if (it.isEmpty()) {
-                    no_fav_text.visibility = View.VISIBLE
-                    favorite_list.visibility = View.GONE
+                    empty_text.visibility = View.VISIBLE
+                    grid_movie_list.visibility = View.GONE
                 } else {
-                    favouriteMovieAdapter.setFavourite(it)
-                    favouriteMovieAdapter.notifyDataSetChanged()
-                    no_fav_text.visibility = View.GONE
+                    gridMovieAdapter.setGridMovie(it)
+                    gridMovieAdapter.notifyDataSetChanged()
+                    empty_text.visibility = View.GONE
                 }
             })
 
-        favorite_list.adapter = favouriteMovieAdapter
-        favorite_list.layoutManager =
+        grid_movie_list.adapter = gridMovieAdapter
+        grid_movie_list.layoutManager =
             StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL)
     }
 

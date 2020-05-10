@@ -5,14 +5,17 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
+import android.view.View
 import android.widget.SearchView
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
+import androidx.recyclerview.widget.GridLayoutManager
 import com.movieboss.R
+import com.movieboss.adapters.GridMovieAdapter
 import com.movieboss.pojo.movies.MovieResult
 import com.movieboss.viewmodels.SearchViewModel
+import kotlinx.android.synthetic.main.activity_favorite.*
 
 import kotlinx.android.synthetic.main.activity_search.*
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -20,28 +23,34 @@ import org.koin.android.viewmodel.ext.android.viewModel
 class SearchActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
 
     private val viewModel by viewModel<SearchViewModel>()
+    private val gridMovieAdapter = GridMovieAdapter(null)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
         setSupportActionBar(toolbar)
+        supportActionBar?.title = ""
 
-        viewModel.searchLiveData.observe(this, object : Observer<ArrayList<MovieResult>>{
-            override fun onChanged(t: ArrayList<MovieResult>?) {
-                println(t?.size)
-            }
-        })
+        grid_list.adapter = gridMovieAdapter
+        grid_list.layoutManager = GridLayoutManager(this, 3)
+        viewModel.searchLiveData.observe(this,
+            Observer{ t ->
+                if (t?.isEmpty() == true) {
+                    empty_results.visibility = View.VISIBLE
+                    empty_results.text = resources.getString(R.string.search_result_not_found)
+                     grid_list.visibility = View.GONE
+                } else {
+                    gridMovieAdapter.setGridMovie(t.filter { !it.posterPath.isNullOrEmpty() })
+                    gridMovieAdapter.notifyDataSetChanged()
+                    empty_results.visibility = View.GONE
+                    grid_list.visibility = View.VISIBLE
+                }
+            })
 
         // Verify the action and get the query
         if (Intent.ACTION_SEARCH == intent.action) {
             intent.getStringExtra(SearchManager.QUERY)?.also { query ->
             }
-        }
-
-
-
-        fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
         }
     }
 
@@ -58,6 +67,7 @@ class SearchActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
             setSearchableInfo(searchManager.getSearchableInfo(componentName))
             isIconifiedByDefault = false // Do not iconify the widget; expand it by default
             setOnQueryTextListener(this@SearchActivity)
+            maxWidth = Int.MAX_VALUE
         }
 
         return true
@@ -68,7 +78,7 @@ class SearchActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
     }
 
     override fun onQueryTextChange(newText: String?): Boolean {
-        viewModel.getSearchReasults(newText?: "")
+        viewModel.getSearchReasults(newText ?: "")
         return true
     }
 }

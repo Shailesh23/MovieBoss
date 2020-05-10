@@ -12,17 +12,17 @@ import com.movieboss.pojo.movies.MovieResult
 import com.movieboss.utils.Constants
 import com.movieboss.utils.showMovieDetails
 
-class FavouriteMovieAdapter constructor(val movieClickListener: MovieClickListener):
-    RecyclerView.Adapter<FavouriteMovieAdapter.FavouriteMovieViewHolder>() {
+class GridMovieAdapter constructor(private val movieClickListener: MovieClickListener?):
+    RecyclerView.Adapter<GridMovieAdapter.FavouriteMovieViewHolder>() {
 
-    private lateinit var favouriteMovies: List<MovieResult>
-    fun setFavourite(favouriteMovies : List<MovieResult>) {
-        this.favouriteMovies = favouriteMovies
+    private lateinit var gridMovieList: List<MovieResult>
+    fun setGridMovie(gridMovies : List<MovieResult>) {
+        this.gridMovieList = gridMovies
     }
 
     override fun getItemCount() : Int {
-        return if(::favouriteMovies.isInitialized) {
-            favouriteMovies.size
+        return if(::gridMovieList.isInitialized) {
+            gridMovieList.size
         } else {
             0
         }
@@ -36,15 +36,19 @@ class FavouriteMovieAdapter constructor(val movieClickListener: MovieClickListen
     override fun onBindViewHolder(holder: FavouriteMovieViewHolder, position: Int) {
         val context = holder.poster.context
         Glide.with(context)
-            .load("${Constants.BASE_URL}${Constants.POSTER_SIZE}${favouriteMovies[position].posterPath}")
+            .load("${Constants.BASE_URL}${Constants.POSTER_SIZE}${gridMovieList[position].posterPath}")
             .into(holder.poster)
 
         holder.poster.setOnClickListener {
-            showMovieDetails(favouriteMovies[position], context)
+            showMovieDetails(gridMovieList[position], context)
         }
 
-        holder.favouriteToggle.setOnClickListener {
-            movieClickListener.movieSelected(favouriteMovies[position])
+        if(movieClickListener != null) {
+            holder.favouriteToggle.setOnClickListener {
+                movieClickListener.movieSelected(gridMovieList[position])
+            }
+        } else {
+            holder.favouriteToggle.visibility = View.GONE
         }
     }
 

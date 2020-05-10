@@ -29,10 +29,11 @@
                 app:strokeColor="#FF777777"
                 app:strokeWidth="1dp" />
 
-            <androidx.cardview.widget.CardView
+            <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:elevation="25dp">
+                android:layout_marginTop="15dp"
+                android:elevation="0dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -51,7 +52,7 @@
                             android:layout_margin="10dp"
                             android:text="@string/popular_movies"
                             android:textColor="@color/colorPrimary"
-                            android:textSize="20sp"
+                            android:textSize="14sp"
                             android:textStyle="bold" />
 
                         <ProgressBar
@@ -64,14 +65,15 @@
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/popular_movie_list"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"/>
                 </LinearLayout>
-            </androidx.cardview.widget.CardView>
+            </FrameLayout>
 
-            <androidx.cardview.widget.CardView
+            <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:elevation="25dp">
+                android:layout_marginTop="15dp"
+                android:elevation="0dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -90,7 +92,7 @@
                             android:layout_margin="10dp"
                             android:text="@string/top_rated_movies"
                             android:textColor="@color/colorPrimary"
-                            android:textSize="20sp"
+                            android:textSize="14sp"
                             android:textStyle="bold" />
 
                         <ProgressBar
@@ -104,14 +106,15 @@
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/top_rated_movie_list"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"/>
                 </LinearLayout>
-            </androidx.cardview.widget.CardView>
+            </FrameLayout>
 
-            <androidx.cardview.widget.CardView
+            <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:elevation="25dp">
+                android:layout_marginTop="15dp"
+                android:elevation="0dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -130,7 +133,7 @@
                             android:layout_margin="10dp"
                             android:text="@string/up_coming_movies"
                             android:textColor="@color/colorPrimary"
-                            android:textSize="20sp"
+                            android:textSize="14sp"
                             android:textStyle="bold" />
 
                         <ProgressBar
@@ -147,7 +150,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="20dp" />
                 </LinearLayout>
-            </androidx.cardview.widget.CardView>
+            </FrameLayout>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>
