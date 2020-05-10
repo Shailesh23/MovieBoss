@@ -2,12 +2,11 @@ package com.movieboss.activity
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -16,17 +15,18 @@ import com.movieboss.R
 import com.movieboss.adapters.MovieAdapter
 import com.movieboss.pojo.movies.MovieResult
 import com.movieboss.utils.Constants
+import com.movieboss.utils.HorizontalSpaceItemDecoration
 import com.movieboss.viewmodels.HomeViewModel
 import com.synnapps.carouselview.CarouselView
-import jp.wasabeef.recyclerview.animators.SlideInUpAnimator
-
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
+
 class HomeActivity : AppCompatActivity(), ViewCallback {
-    //TODO add data binding
+    //TODO add view binding
     private val viewModel by viewModel<HomeViewModel>()
+    val horizontalSpacing = 15
 
     lateinit var carouselView: CarouselView
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,16 +44,31 @@ class HomeActivity : AppCompatActivity(), ViewCallback {
         popular_movie_list.adapter = popularMovieAdapter
         val popularMovieLayoutManager = getHorizontalLayoutManager()
         popular_movie_list.layoutManager = popularMovieLayoutManager
+        popular_movie_list.addItemDecoration(
+            HorizontalSpaceItemDecoration(
+                horizontalSpacing
+            )
+        )
 
         val topRatedMovieAdapter = getMovieAdapter()
         top_rated_movie_list.adapter = topRatedMovieAdapter
         val topMovieLayoutManager = getHorizontalLayoutManager()
         top_rated_movie_list.layoutManager = topMovieLayoutManager
+        top_rated_movie_list.addItemDecoration(
+            HorizontalSpaceItemDecoration(
+                horizontalSpacing
+            )
+        )
 
         val upComingMovieAdapter = getMovieAdapter()
         up_coming_movie_list.adapter = upComingMovieAdapter
         val upComingMovieLayoutManager = getHorizontalLayoutManager()
         up_coming_movie_list.layoutManager = upComingMovieLayoutManager
+        up_coming_movie_list.addItemDecoration(
+            HorizontalSpaceItemDecoration(
+                horizontalSpacing
+            )
+        )
 
         viewModel.popularMovies.observe(this,
             Observer<List<MovieResult>> { popularMovieDataList ->
