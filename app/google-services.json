@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "515349788361",
+    "firebase_url": "https://movieboss-e1809.firebaseio.com",
+    "project_id": "movieboss-e1809",
+    "storage_bucket": "movieboss-e1809.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:515349788361:android:8c2ea2ef00377ac59ebf18",
+        "android_client_info": {
+          "package_name": "com.movieboss"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "515349788361-qfiicehegkqj20r143i6e5agub7ue83g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDIxOnZ_QxZi0t36DQ_8veOiNWVYUDgCtU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "515349788361-qfiicehegkqj20r143i6e5agub7ue83g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

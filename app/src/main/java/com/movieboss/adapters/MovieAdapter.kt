@@ -34,7 +34,7 @@ class MovieAdapter(private val context : Context) : RecyclerView.Adapter<HomeScr
     }
 
     override fun onBindViewHolder(holder: HomeScreenViewHolder, position: Int) {
-        holder.posterTitle.text = listOfMovieMovies[position].title
+//        holder.posterTitle.text = listOfMovieMovies[position].title
         Glide.with(context)
             .load("https://image.tmdb.org/t/p/${Constants.HD_POSTER_SIZE}${listOfMovieMovies[position].posterPath}")
             .into(holder.posterImage)
@@ -46,6 +46,6 @@ class MovieAdapter(private val context : Context) : RecyclerView.Adapter<HomeScr
 
 class HomeScreenViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
     val posterImage : ImageView = view.findViewById(R.id.poster_image)
-    val posterTitle : TextView = view.findViewById(R.id.title)
+//    val posterTitle : TextView = view.findViewById(R.id.title)
 }
 

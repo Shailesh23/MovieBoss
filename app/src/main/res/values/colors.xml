@@ -7,6 +7,8 @@
     <color name="colorSecondary">#E0E0E0</color>
 
     <color name="colorAccent">#D81B60</color>
+    <color name="screenBackground">#f06292</color>
+    <color name="itemForeground">#ba2d65</color>
 
     <color name="black_overlay">#66000000</color>
 </resources>

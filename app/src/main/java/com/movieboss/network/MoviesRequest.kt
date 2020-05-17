@@ -3,6 +3,7 @@ package com.movieboss.network
 import androidx.lifecycle.MutableLiveData
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.GsonBuilder
+import com.movieboss.pojo.movies.Genres
 import com.movieboss.pojo.movies.Movies
 import com.movieboss.pojo.movies.MovieResult
 import com.movieboss.utils.Logs
@@ -63,6 +64,34 @@ class MoviesRequest {
         })
     }
 
+    fun getUpComingMovies(
+        moviePage: Int,
+        upComingMovies: MutableLiveData<java.util.ArrayList<MovieResult>>
+    ) {
+        val call = movieServer.getUpComingMovies(moviePage)
+
+        call.enqueue(object : Callback<Movies> {
+            override fun onFailure(call: Call<Movies>, t: Throwable) {
+                Logs.e("MoviesRequest", t.message ?: "")
+            }
+
+            override fun onResponse(
+                call: Call<Movies>,
+                response: Response<Movies>
+            ) {
+                if (response.isSuccessful) {
+                    val tempData = ArrayList<MovieResult>()
+                    if (upComingMovies.value != null) {
+                        tempData.addAll(upComingMovies.value!!)
+                    }
+                    tempData.addAll(response.body()?.results!!)
+                    upComingMovies.value = tempData
+                }
+            }
+
+        })
+    }
+
     fun getTopRatedMovies(
         moviePage: Int,
         topMovies: MutableLiveData<ArrayList<MovieResult>>
@@ -89,5 +118,42 @@ class MoviesRequest {
 
         })
         return topMovies
+    }
+
+    fun getSearchResults(
+        queryParams: String,
+        searchResults: MutableLiveData<ArrayList<MovieResult>>
+    ): MutableLiveData<ArrayList<MovieResult>> {
+        val call = movieServer.searchMovies(queryParams)
+        call.enqueue(object : Callback<Movies> {
+            override fun onFailure(call: Call<Movies>, t: Throwable) {
+                Logs.e("MovieRequest", "search request failed ${t.message}")
+            }
+
+            override fun onResponse(call: Call<Movies>, response: Response<Movies>) {
+                if (response.isSuccessful) {
+                    searchResults.value = response.body()?.results!!
+                }
+            }
+
+        })
+
+        return searchResults
+    }
+
+    fun updateGenresInfo(handleResult : (Genres) -> Unit) {
+        val call = movieServer.getGenres()
+        call.enqueue(object : Callback<Genres>{
+            override fun onFailure(call: Call<Genres>, t: Throwable) {
+                //todo log analytics here
+            }
+
+            override fun onResponse(call: Call<Genres>, response: Response<Genres>) {
+                if(response.isSuccessful) {
+                    handleResult(response.body()!!)
+                }
+            }
+
+        })
     }
 }
