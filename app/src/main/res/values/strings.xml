@@ -18,4 +18,9 @@
     <string name="request_movie_name">Please enter movie name</string>
     <string name="search_result_not_found">No results found</string>
     <string name="title_activity_search">SearchActivity</string>
+    <string name="genres">Genres:</string>
+    <string name="popularity">Popularity:</string>
+    <string name="vote_count">Vote Count:</string>
+    <string name="adult">Adult:</string>
+    <string name="vote_average">Average Vote:</string>
 </resources>

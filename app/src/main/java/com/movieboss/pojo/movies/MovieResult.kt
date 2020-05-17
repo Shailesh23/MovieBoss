@@ -3,11 +3,7 @@ package com.movieboss.pojo.movies
 import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import androidx.room.TypeConverter
-import androidx.room.TypeConverters
-import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
-import com.movieboss.utils.MovieListConverter
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
@@ -39,6 +35,8 @@ data class MovieResult (
     @SerializedName("overview")
     var overview: String? = null,
     @SerializedName("release_date")
-    var releaseDate: String? = null
+    var releaseDate: String? = null,
+    @SerializedName("genre_ids")
+    var genresId : List<Int>?
 
 ) : Parcelable

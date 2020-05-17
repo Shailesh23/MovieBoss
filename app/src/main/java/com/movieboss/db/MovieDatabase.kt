@@ -8,7 +8,8 @@ import androidx.room.TypeConverters
 import com.movieboss.pojo.movies.MovieResult
 import com.movieboss.utils.MovieListConverter
 
-@Database(entities = arrayOf(MovieResult::class), version = 1)
+@Database(entities = [MovieResult::class], version = 2)
+@TypeConverters(MovieListConverter::class)
 abstract class MovieDatabase : RoomDatabase() {
     abstract fun movieDao(): MovieDao
 
@@ -21,7 +22,7 @@ abstract class MovieDatabase : RoomDatabase() {
                     applicationContext,
                     MovieDatabase::class.java, "fav_movies"
 
-                ).build()
+                ).fallbackToDestructiveMigration().build()
             }
             return db?.movieDao()
         }

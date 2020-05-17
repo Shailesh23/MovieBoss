@@ -29,8 +29,6 @@ class MovieDetailsActivity : AppCompatActivity() {
 
     private var movie: MovieResult? = null
     private val movieDetailsViewModel by viewModel<MovieDetailsViewModel>()
-    private var listOfGenres : List<GenresItem>? = null
-    private var genres = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,9 +37,9 @@ class MovieDetailsActivity : AppCompatActivity() {
 
         setupUI()
         movieDetailsViewModel.genres.observe(this,
-            Observer {
-                listOfGenres = it
-//                genres = listOfGenres.filter { it.id in movie. }
+            Observer { genresItems ->
+                tv_genres.text = genresItems?.filter { movie?.genresId?.contains(it.id) == true}
+                    ?.joinToString(transform = {it.name.toString()}, separator = ", ").toString()
             })
         fab.setOnClickListener { view ->
             if (movie != null) {
@@ -85,6 +83,13 @@ class MovieDetailsActivity : AppCompatActivity() {
                 }
                 movie_details_bottom_sheet.clipToOutline = true
             }
+
+            tv_popularity.text = movie?.popularity.toString()
+            tv_vote_count.text = movie?.voteCount.toString()
+            tv_average_vote.text = movie?.voteAverage.toString()
+
+            val adult = if (movie?.isAdult == true) "Yes" else "No"
+            tv_adult.text = adult
 
         } else {
             //TODO show error
