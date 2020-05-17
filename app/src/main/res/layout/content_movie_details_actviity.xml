@@ -4,30 +4,42 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/movie_details_bottom_sheet"
     android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="@color/colorSecondary"
     android:paddingTop="24dp"
-    android:layout_height="match_parent"
     app:behavior_peekHeight="300dp"
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
     tools:context=".activity.MovieDetailsActivity"
     tools:showIn="@layout/activity_movie_details_actviity">
+
+    <View
+        android:id="@+id/bottom_sheet_handle"
+        android:layout_width="30dp"
+        android:layout_height="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/bottom_sheet_handle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="24dp"
         android:src="@drawable/ic_thumb_up"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/backdrop_image_holder" />
+        app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_handle" />
 
     <TextView
         android:id="@+id/vote_count"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
+        android:layout_marginStart="45dp"
         android:layout_marginTop="8dp"
+        android:fontFamily="sans-serif-medium"
+        android:gravity="center"
         android:text="23"
         android:textAppearance="@android:style/TextAppearance.Material.Medium"
         android:textSize="18sp"
@@ -39,11 +51,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:autoSizeTextType="uniform"
+        android:fontFamily="sans-serif-medium"
+        android:gravity="fill_horizontal"
+        android:lineSpacingExtra="10sp"
         android:padding="10dp"
         android:text="During the 1980s, a failed stand-up comedian is driven insane and turns to a life of crime and chaos in Gotham City while becoming an infamous psychopathic crime figure."
-        android:textAppearance="@android:style/TextAppearance.Material.Body1"
-        android:textSize="18sp"
-        android:textStyle="italic"
+        android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -56,7 +70,7 @@
         android:layout_marginTop="24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/backdrop_image_holder"
+        app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_handle"
         app:srcCompat="@drawable/ic_language" />
 
     <TextView
@@ -64,6 +78,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:fontFamily="sans-serif-medium"
         android:text="EN"
         android:textAppearance="@android:style/TextAppearance.Material.Medium"
         app:layout_constraintEnd_toEndOf="parent"
@@ -77,7 +92,7 @@
         android:layout_marginTop="24dp"
         android:layout_marginEnd="50dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/backdrop_image_holder"
+        app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_handle"
         app:srcCompat="@drawable/ic_update" />
 
     <TextView
@@ -86,9 +101,12 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="25dp"
+        android:fontFamily="sans-serif-medium"
         android:text="date"
         android:textAppearance="@android:style/TextAppearance.Material.Medium"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

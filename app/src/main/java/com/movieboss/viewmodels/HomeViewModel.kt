@@ -3,7 +3,6 @@ package com.movieboss.viewmodels
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import com.movieboss.network.MoviesRequest
 import com.movieboss.pojo.movies.MovieResult
 import com.movieboss.repository.MovieRepository
 import org.koin.core.KoinComponent
@@ -30,5 +29,9 @@ class HomeViewModel(application: Application) : AndroidViewModel(application), K
 
     fun loadUpComingMovies() : MutableLiveData<ArrayList<MovieResult>> {
         return moviesRepo.fetchUpComingMovies(upComingMovieRequestPage++)
+    }
+
+    fun updateGenres() {
+        moviesRepo.updateGenres()
     }
 }

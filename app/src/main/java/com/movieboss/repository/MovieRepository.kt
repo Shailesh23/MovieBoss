@@ -1,16 +1,15 @@
 package com.movieboss.repository
 
-import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.movieboss.db.GenresDao
 import com.movieboss.db.MovieDao
-import com.movieboss.db.MovieDatabase
 import com.movieboss.network.MoviesRequest
+import com.movieboss.pojo.movies.GenresItem
 import com.movieboss.pojo.movies.MovieResult
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.koin.core.KoinComponent
-import org.koin.core.get
 import org.koin.core.inject
 
 class MovieRepository : KoinComponent {
@@ -19,7 +18,8 @@ class MovieRepository : KoinComponent {
     private val topMovies = MutableLiveData<ArrayList<MovieResult>>()
     private val upComingMovies = MutableLiveData<ArrayList<MovieResult>>()
     private val searchResults = MutableLiveData<ArrayList<MovieResult>>()
-    private val movieDb : MovieDao by inject()
+    private val movieDao : MovieDao by inject()
+    private val genresDao : GenresDao by inject()
 
     fun getSearchResults(): MutableLiveData<ArrayList<MovieResult>> {
         return searchResults
@@ -42,12 +42,12 @@ class MovieRepository : KoinComponent {
 
     fun saveFavoriteMovie(movie: MovieResult) {
         GlobalScope.launch {
-            movieDb.insertMovie(movie)
+            movieDao.insertMovie(movie)
         }
     }
 
     fun getFavoriteMovies(): LiveData<List<MovieResult>>? {
-        return movieDb.getAllFavMovies()
+        return movieDao.getAllFavMovies()
     }
 
 
@@ -57,7 +57,24 @@ class MovieRepository : KoinComponent {
 
     fun removeFavouriteMovie(movie : MovieResult) {
         GlobalScope.launch {
-            movieDb.deleteMovie(movie)
+            movieDao.deleteMovie(movie)
         }
+    }
+    
+    fun updateGenres() {
+        moviesRequest.updateGenresInfo {genres ->
+            if (genres.genres.isNullOrEmpty()) return@updateGenresInfo
+            for(genre in genres.genres) {
+                if(genre != null) {
+                    GlobalScope.launch {
+                        genresDao.insertGenres(genre)
+                    }
+                }
+            }
+        }
+    }
+
+    fun fetchGenres(): LiveData<List<GenresItem>> {
+        return genresDao.getGenres()
     }
 }

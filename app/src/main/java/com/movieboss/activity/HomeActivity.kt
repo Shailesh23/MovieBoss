@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -18,11 +19,15 @@ import com.movieboss.utils.Constants
 import com.movieboss.utils.HorizontalSpaceItemDecoration
 import com.movieboss.viewmodels.HomeViewModel
 import com.synnapps.carouselview.CarouselView
+import com.synnapps.carouselview.ImageListener
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
-
+//todo go back to dagger
+//todo add view binding
+//todo gradient home screen poster
+//todo dark theme
 class HomeActivity : AppCompatActivity(), ViewCallback {
     //TODO add view binding
     private val viewModel by viewModel<HomeViewModel>()
@@ -39,6 +44,9 @@ class HomeActivity : AppCompatActivity(), ViewCallback {
         supportActionBar?.title = resources.getString(R.string.home_screen_title)
 
         carouselView = findViewById(R.id.carouselView)
+
+        //fetch latest genres and save into db
+        viewModel.updateGenres()
 
         val popularMovieAdapter = getMovieAdapter()
         popular_movie_list.adapter = popularMovieAdapter
@@ -125,6 +133,12 @@ class HomeActivity : AppCompatActivity(), ViewCallback {
                 this
             )
         )
+    }
+
+    private fun getRandomPosition(): Int {
+        val min = 1
+        val max = 19
+        return min + ((Math.random() * ((max - min) + 1))).toInt()
     }
 
     private fun getHorizontalLayoutManager(): LinearLayoutManager {

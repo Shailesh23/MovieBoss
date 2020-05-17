@@ -7,12 +7,9 @@ import com.movieboss.repository.MovieRepository
 
 class MovieDetailsViewModel(application: Application) : AndroidViewModel(application) {
     private val movieRepository = MovieRepository()
+    val genres = movieRepository.fetchGenres()
 
     fun saveMovie(movieResult: MovieResult) {
         movieRepository.saveFavoriteMovie(movieResult)
-    }
-
-    fun getMovies() {
-        movieRepository.getFavoriteMovies()
     }
 }

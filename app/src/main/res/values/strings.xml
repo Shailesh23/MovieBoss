@@ -14,7 +14,7 @@
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="poster_image_for_the_favourite_grid_layout">poster image for the favourite grid layout</string>
     <string name="favourite_icon_button">favourite icon button</string>
-    <string name="add_favourite_movie_first">Add Favourite Movie First</string>
+    <string name="add_favourite_movie_first">No favorites found</string>
     <string name="request_movie_name">Please enter movie name</string>
     <string name="search_result_not_found">No results found</string>
     <string name="title_activity_search">SearchActivity</string>

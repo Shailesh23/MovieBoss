@@ -3,6 +3,7 @@ package com.movieboss.network
 import androidx.lifecycle.MutableLiveData
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.GsonBuilder
+import com.movieboss.pojo.movies.Genres
 import com.movieboss.pojo.movies.Movies
 import com.movieboss.pojo.movies.MovieResult
 import com.movieboss.utils.Logs
@@ -138,5 +139,21 @@ class MoviesRequest {
         })
 
         return searchResults
+    }
+
+    fun updateGenresInfo(handleResult : (Genres) -> Unit) {
+        val call = movieServer.getGenres()
+        call.enqueue(object : Callback<Genres>{
+            override fun onFailure(call: Call<Genres>, t: Throwable) {
+                //todo log analytics here
+            }
+
+            override fun onResponse(call: Call<Genres>, response: Response<Genres>) {
+                if(response.isSuccessful) {
+                    handleResult(response.body()!!)
+                }
+            }
+
+        })
     }
 }

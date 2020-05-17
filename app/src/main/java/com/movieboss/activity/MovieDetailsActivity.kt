@@ -9,10 +9,12 @@ import android.view.ViewOutlineProvider
 import androidx.annotation.RequiresApi
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.movieboss.R
+import com.movieboss.pojo.movies.GenresItem
 import com.movieboss.pojo.movies.MovieResult
 import com.movieboss.utils.Constants
 import com.movieboss.utils.Constants.Companion.MOVIE_KEY
@@ -27,6 +29,8 @@ class MovieDetailsActivity : AppCompatActivity() {
 
     private var movie: MovieResult? = null
     private val movieDetailsViewModel by viewModel<MovieDetailsViewModel>()
+    private var listOfGenres : List<GenresItem>? = null
+    private var genres = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,12 +38,16 @@ class MovieDetailsActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         setupUI()
+        movieDetailsViewModel.genres.observe(this,
+            Observer {
+                listOfGenres = it
+//                genres = listOfGenres.filter { it.id in movie. }
+            })
         fab.setOnClickListener { view ->
-            if(movie != null) {
+            if (movie != null) {
                 Snackbar.make(view, "Added to your favorites", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show()
                 movieDetailsViewModel.saveMovie(movie!!)
-                movieDetailsViewModel.getMovies()
             }
         }
     }
