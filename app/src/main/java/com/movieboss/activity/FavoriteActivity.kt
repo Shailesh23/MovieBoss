@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.movieboss.MovieClickListener
 import com.movieboss.R
 import com.movieboss.adapters.GridMovieAdapter
+import com.movieboss.analytics.Analytics
 import com.movieboss.pojo.movies.MovieResult
 import com.movieboss.viewmodels.FavouriteViewModel
 import kotlinx.android.synthetic.main.activity_favorite.*
@@ -24,6 +25,7 @@ class FavoriteActivity : AppCompatActivity(), MovieClickListener {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.hide()
 
+        Analytics.logScreenEvent(this)
         favouriteViewModel.favouriteMovies?.observe(this,
             Observer {
                 if (it.isEmpty()) {
@@ -42,6 +44,7 @@ class FavoriteActivity : AppCompatActivity(), MovieClickListener {
     }
 
     override fun movieSelected(movie: MovieResult) {
+        Analytics.logMovieUnFavorite(movie.title ?: "N/A")
         favouriteViewModel.removeFavoriteMovie(movie)
     }
 }

@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
-
+apply plugin: 'com.google.gms.google-services'
 apply plugin: 'kotlin-android'
-
+apply plugin: 'com.google.firebase.crashlytics'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
@@ -79,5 +79,9 @@ dependencies {
     // optional - Kotlin Extensions and Coroutines support for Room
     implementation "androidx.room:room-ktx:$room_version"
 
+    implementation 'com.google.firebase:firebase-analytics-ktx:17.4.1'
+
+    // Add the Firebase Crashlytics SDK.
+    implementation 'com.google.firebase:firebase-crashlytics:17.0.0'
     implementation 'com.facebook.stetho:stetho:1.5.1'
 }

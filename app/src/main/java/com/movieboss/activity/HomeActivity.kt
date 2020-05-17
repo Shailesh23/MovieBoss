@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,12 +13,12 @@ import com.bumptech.glide.Glide
 import com.facebook.stetho.Stetho
 import com.movieboss.R
 import com.movieboss.adapters.MovieAdapter
+import com.movieboss.analytics.Analytics
 import com.movieboss.pojo.movies.MovieResult
 import com.movieboss.utils.Constants
 import com.movieboss.utils.HorizontalSpaceItemDecoration
 import com.movieboss.viewmodels.HomeViewModel
 import com.synnapps.carouselview.CarouselView
-import com.synnapps.carouselview.ImageListener
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -42,6 +41,7 @@ class HomeActivity : AppCompatActivity(), ViewCallback {
         Stetho.initializeWithDefaults(applicationContext)
 
         supportActionBar?.title = resources.getString(R.string.home_screen_title)
+        Analytics.logScreenEvent(this)
 
         carouselView = findViewById(R.id.carouselView)
 

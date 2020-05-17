@@ -13,6 +13,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import com.movieboss.R
 import com.movieboss.adapters.GridMovieAdapter
+import com.movieboss.analytics.Analytics
 import com.movieboss.pojo.movies.MovieResult
 import com.movieboss.viewmodels.SearchViewModel
 import kotlinx.android.synthetic.main.activity_favorite.*
@@ -30,6 +31,7 @@ class SearchActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
         setContentView(R.layout.activity_search)
         setSupportActionBar(toolbar)
         supportActionBar?.title = ""
+        Analytics.logScreenEvent(this)
 
         grid_list.adapter = gridMovieAdapter
         grid_list.layoutManager = GridLayoutManager(this, 3)
