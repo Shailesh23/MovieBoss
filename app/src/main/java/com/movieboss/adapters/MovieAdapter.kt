@@ -18,7 +18,8 @@ class MovieAdapter(private val context : Context) : RecyclerView.Adapter<HomeScr
     var listOfMovieMovies : List<MovieResult> = ArrayList()
 
     fun setMovies(movieMovies: List<MovieResult>) {
-        listOfMovieMovies = movieMovies
+        val filteredMovies = movieMovies.filter { !it.posterPath.isNullOrEmpty() }
+        listOfMovieMovies = filteredMovies
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeScreenViewHolder {

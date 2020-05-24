@@ -27,7 +27,7 @@ import org.koin.android.viewmodel.ext.android.viewModel
 //todo add view binding
 //todo gradient home screen poster
 //todo dark theme
-class HomeActivity : AppCompatActivity(), ViewCallback {
+class HomeActivity : NoConnectionActivity(), ViewCallback {
     //TODO add view binding
     private val viewModel by viewModel<HomeViewModel>()
     val horizontalSpacing = 15
@@ -139,6 +139,12 @@ class HomeActivity : AppCompatActivity(), ViewCallback {
         val min = 1
         val max = 19
         return min + ((Math.random() * ((max - min) + 1))).toInt()
+    }
+
+    override fun reloadData() {
+        viewModel.loadPopularMovies()
+        viewModel.loadTopMovies()
+        viewModel.loadUpComingMovies()
     }
 
     private fun getHorizontalLayoutManager(): LinearLayoutManager {
