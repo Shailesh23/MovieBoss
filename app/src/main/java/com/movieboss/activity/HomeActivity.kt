@@ -27,8 +27,8 @@ import org.koin.android.viewmodel.ext.android.viewModel
 //todo add view binding
 //todo gradient home screen poster
 //todo dark theme
+//TODO add view binding
 class HomeActivity : NoConnectionActivity(), ViewCallback {
-    //TODO add view binding
     private val viewModel by viewModel<HomeViewModel>()
     val horizontalSpacing = 15
 
