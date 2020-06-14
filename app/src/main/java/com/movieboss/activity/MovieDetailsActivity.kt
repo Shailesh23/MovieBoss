@@ -19,6 +19,7 @@ import com.movieboss.pojo.movies.GenresItem
 import com.movieboss.pojo.movies.MovieResult
 import com.movieboss.utils.Constants
 import com.movieboss.utils.Constants.Companion.MOVIE_KEY
+import com.movieboss.utils.RemoteConfig
 import com.movieboss.viewmodels.MovieDetailsViewModel
 
 import kotlinx.android.synthetic.main.activity_movie_details_actviity.*
@@ -69,7 +70,8 @@ class MovieDetailsActivity : AppCompatActivity() {
         if (movie != null) {
             Glide.with(this)
                 .load(
-                    "https://image.tmdb.org/t/p/${Constants.BACKDROP_SIZE}${movie?.posterPath}"
+                    "https://image.tmdb.org/t/p/${RemoteConfig.fetchConfig(Constants.BACKDROP_SIZE_KEY)}" +
+                            "${movie?.posterPath}"
                 )
                 .into(backdrop_image_holder)
 

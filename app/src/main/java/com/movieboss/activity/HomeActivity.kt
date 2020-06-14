@@ -17,6 +17,7 @@ import com.movieboss.analytics.Analytics
 import com.movieboss.pojo.movies.MovieResult
 import com.movieboss.utils.Constants
 import com.movieboss.utils.HorizontalSpaceItemDecoration
+import com.movieboss.utils.RemoteConfig
 import com.movieboss.viewmodels.HomeViewModel
 import com.synnapps.carouselview.CarouselView
 import kotlinx.android.synthetic.main.activity_main.*
@@ -86,7 +87,8 @@ class HomeActivity : NoConnectionActivity(), ViewCallback {
                 carouselView.setImageListener { position, imageView ->
                     if (null != imageView)
                         Glide.with(this@HomeActivity)
-                            .load("https://image.tmdb.org/t/p/${Constants.BACKDROP_SIZE}${popularMovieDataList[position].backdropPath}")
+                            .load("https://image.tmdb.org/t/p/${RemoteConfig.fetchConfig(Constants.BACKDROP_SIZE_KEY)}" +
+                                    "${popularMovieDataList[position].backdropPath}")
                             .into(imageView)
                 }
                 carouselView.pageCount = 5

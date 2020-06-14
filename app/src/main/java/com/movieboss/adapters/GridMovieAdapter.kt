@@ -10,6 +10,7 @@ import com.movieboss.MovieClickListener
 import com.movieboss.R
 import com.movieboss.pojo.movies.MovieResult
 import com.movieboss.utils.Constants
+import com.movieboss.utils.RemoteConfig
 import com.movieboss.utils.showMovieDetails
 
 class GridMovieAdapter constructor(private val movieClickListener: MovieClickListener?):
@@ -36,7 +37,7 @@ class GridMovieAdapter constructor(private val movieClickListener: MovieClickLis
     override fun onBindViewHolder(holder: FavouriteMovieViewHolder, position: Int) {
         val context = holder.poster.context
         Glide.with(context)
-            .load("${Constants.BASE_URL}${Constants.POSTER_SIZE}${gridMovieList[position].posterPath}")
+            .load("${Constants.BASE_URL}${RemoteConfig.fetchConfig(Constants.POSTER_SIZE_KEY)}${gridMovieList[position].posterPath}")
             .into(holder.poster)
 
         holder.poster.setOnClickListener {

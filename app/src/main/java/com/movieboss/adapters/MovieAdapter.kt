@@ -11,6 +11,7 @@ import com.bumptech.glide.Glide
 import com.movieboss.R
 import com.movieboss.pojo.movies.MovieResult
 import com.movieboss.utils.Constants
+import com.movieboss.utils.RemoteConfig
 import com.movieboss.utils.showMovieDetails
 
 class MovieAdapter(private val context : Context) : RecyclerView.Adapter<HomeScreenViewHolder>() {
@@ -37,7 +38,8 @@ class MovieAdapter(private val context : Context) : RecyclerView.Adapter<HomeScr
     override fun onBindViewHolder(holder: HomeScreenViewHolder, position: Int) {
 //        holder.posterTitle.text = listOfMovieMovies[position].title
         Glide.with(context)
-            .load("https://image.tmdb.org/t/p/${Constants.HD_POSTER_SIZE}${listOfMovieMovies[position].posterPath}")
+            .load("https://image.tmdb.org/t/p/${RemoteConfig.fetchConfig(Constants.HD_POSTER_SIZE_KEY)}" +
+                    "${listOfMovieMovies[position].posterPath}")
             .into(holder.posterImage)
         holder.view.setOnClickListener {
             showMovieDetails(listOfMovieMovies[position], context)
