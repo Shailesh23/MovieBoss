@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,6 +21,7 @@ import com.movieboss.utils.HorizontalSpaceItemDecoration
 import com.movieboss.utils.RemoteConfig
 import com.movieboss.viewmodels.HomeViewModel
 import com.synnapps.carouselview.CarouselView
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -28,7 +30,7 @@ import org.koin.android.viewmodel.ext.android.viewModel
 //todo gradient home screen poster
 //todo dark theme
 //TODO add view binding
-class HomeActivity : FragmentActivity() {
+class HomeActivity : AppCompatActivity() {
     private val viewModel by viewModel<HomeViewModel>()
     private val horizontalSpacing = 15
 
@@ -36,7 +38,7 @@ class HomeActivity : FragmentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-//        setActionBar(toolbar)
+        setSupportActionBar(toolbar)
 
         Stetho.initializeWithDefaults(applicationContext)
 
