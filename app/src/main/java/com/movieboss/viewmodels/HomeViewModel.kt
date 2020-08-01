@@ -13,11 +13,16 @@ class HomeViewModel(application: Application) : AndroidViewModel(application), K
     private val moviesRepo by inject<MovieRepository>()
     private val movieData: HashMap<String, MutableLiveData<ArrayList<MovieResult>>> = HashMap()
     private val moviePage: HashMap<String, Int> = HashMap()
+    val upComingMovieLiveData : MutableLiveData<ArrayList<MovieResult>> = MutableLiveData()
 
     fun loadMovieData(movieRequestType: String) {
         val movieRequestPage = moviePage[movieRequestType] ?: 1
         moviesRepo.fetchMovies(movieRequestPage, movieRequestType, movieData[movieRequestType]!!)
         moviePage[movieRequestType] = movieRequestPage + 1
+    }
+
+    fun getUpcomingMovies() {
+        moviesRepo.fetchMovies(1, "upcoming", upComingMovieLiveData)
     }
 
     fun setupMovieInfo(movieRequestType: String) {

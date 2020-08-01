@@ -63,7 +63,7 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.10.0'
 
     //crousel
-    implementation 'com.synnapps:carouselview:0.0.7'
+    implementation 'com.synnapps:carouselview:0.1.5'
 
     //recycler slide animator
     implementation 'jp.wasabeef:recyclerview-animators:3.0.0'

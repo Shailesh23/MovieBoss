@@ -61,7 +61,6 @@ class MoviesRequest {
                     movieLiveData.value = tempData
                 }
             }
-
         })
     }
 

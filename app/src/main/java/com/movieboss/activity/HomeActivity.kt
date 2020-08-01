@@ -4,25 +4,18 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.facebook.stetho.Stetho
 import com.movieboss.R
-import com.movieboss.adapters.MovieAdapter
 import com.movieboss.analytics.Analytics
-import com.movieboss.pojo.movies.MovieResult
 import com.movieboss.utils.Constants
-import com.movieboss.utils.HorizontalSpaceItemDecoration
 import com.movieboss.utils.RemoteConfig
+import com.movieboss.utils.showMovieDetails
 import com.movieboss.viewmodels.HomeViewModel
-import com.synnapps.carouselview.CarouselView
+import com.synnapps.carouselview.ImageClickListener
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.content_main.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
 //todo go back to dagger
@@ -32,7 +25,6 @@ import org.koin.android.viewmodel.ext.android.viewModel
 //TODO add view binding
 class HomeActivity : AppCompatActivity() {
     private val viewModel by viewModel<HomeViewModel>()
-    private val horizontalSpacing = 15
 
 //    lateinit var carouselView: CarouselView
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,11 +37,25 @@ class HomeActivity : AppCompatActivity() {
         actionBar?.title = resources.getString(R.string.home_screen_title)
         Analytics.logScreenEvent(this)
 
-       // carouselView = findViewById(R.id.carouselView)
-
         //fetch latest genres and save into db
         viewModel.updateGenres()
 
+        viewModel.upComingMovieLiveData.observe(this, Observer { movieResponse ->
+            val upcomingMovies = movieResponse.filter { it.backdropPath != null }
+            carouselView.setImageListener { position, imageView ->
+                if (null != imageView)
+                    Glide.with(this@HomeActivity)
+                        .load("https://image.tmdb.org/t/p/${RemoteConfig.fetchConfig(Constants.BACKDROP_SIZE_KEY)}" +
+                                "${upcomingMovies[position].backdropPath}")
+                        .into(imageView)
+            }
+            carouselView.setImageClickListener {
+                showMovieDetails(upcomingMovies[it], this@HomeActivity)
+            }
+            carouselView.pageCount = 5
+        })
+
+        viewModel.getUpcomingMovies()
         supportFragmentManager.apply {
             beginTransaction().apply {
                 add(R.id.movie_items_container, MovieListFragment.newInstance("now_playing", "Now Playing"), null)
