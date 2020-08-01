@@ -17,12 +17,12 @@ class HomeViewModel(application: Application) : AndroidViewModel(application), K
 
     fun loadMovieData(movieRequestType: String) {
         val movieRequestPage = moviePage[movieRequestType] ?: 1
-        moviesRepo.fetchMovies(movieRequestPage, movieRequestType, movieData[movieRequestType]!!)
+        moviesRepo.fetchMovies("movie", movieRequestPage, movieRequestType, movieData[movieRequestType]!!)
         moviePage[movieRequestType] = movieRequestPage + 1
     }
 
     fun getUpcomingMovies() {
-        moviesRepo.fetchMovies(1, "upcoming", upComingMovieLiveData)
+        moviesRepo.fetchMovies("movie",1, "upcoming", upComingMovieLiveData)
     }
 
     fun setupMovieInfo(movieRequestType: String) {

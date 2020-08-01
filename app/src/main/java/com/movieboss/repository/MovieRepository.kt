@@ -22,9 +22,9 @@ class MovieRepository : KoinComponent {
         return searchResults
     }
 
-    fun fetchMovies(page: Int, movieRequestType : String,
+    fun fetchMovies(mediaType : String, page: Int, movieRequestType : String,
                     movieLiveData: MutableLiveData<ArrayList<MovieResult>>) {
-        moviesRequest.fetchMovieData(page, movieRequestType, movieLiveData)
+        moviesRequest.fetchMovieData(page, movieRequestType, mediaType, movieLiveData)
     }
 
     fun saveFavoriteMovie(movie: MovieResult) {

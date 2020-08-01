@@ -14,7 +14,6 @@ import com.movieboss.utils.Constants
 import com.movieboss.utils.RemoteConfig
 import com.movieboss.utils.showMovieDetails
 import com.movieboss.viewmodels.HomeViewModel
-import com.synnapps.carouselview.ImageClickListener
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -26,7 +25,6 @@ import org.koin.android.viewmodel.ext.android.viewModel
 class HomeActivity : AppCompatActivity() {
     private val viewModel by viewModel<HomeViewModel>()
 
-//    lateinit var carouselView: CarouselView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -40,6 +38,19 @@ class HomeActivity : AppCompatActivity() {
         //fetch latest genres and save into db
         viewModel.updateGenres()
 
+        setupCarousel()
+        supportFragmentManager.apply {
+            beginTransaction().apply {
+                add(R.id.movie_items_container, MovieListFragment.newInstance("upcoming", "Upcoming Movies"), null)
+                add(R.id.movie_items_container, MovieListFragment.newInstance("popular", "Popular Movies"), null)
+                add(R.id.movie_items_container, MovieListFragment.newInstance("now_playing", "Now Playing"), null)
+                add(R.id.movie_items_container, MovieListFragment.newInstance("top_rated", "Top Movies"), null)
+                commitAllowingStateLoss()
+            }
+        }
+    }
+
+    private fun setupCarousel() {
         viewModel.upComingMovieLiveData.observe(this, Observer { movieResponse ->
             val upcomingMovies = movieResponse.filter { it.backdropPath != null }
             carouselView.setImageListener { position, imageView ->
@@ -56,15 +67,6 @@ class HomeActivity : AppCompatActivity() {
         })
 
         viewModel.getUpcomingMovies()
-        supportFragmentManager.apply {
-            beginTransaction().apply {
-                add(R.id.movie_items_container, MovieListFragment.newInstance("now_playing", "Now Playing"), null)
-                add(R.id.movie_items_container, MovieListFragment.newInstance("upcoming", "Upcoming Movies"), null)
-                add(R.id.movie_items_container, MovieListFragment.newInstance("popular", "Popular Movies"), null)
-                add(R.id.movie_items_container, MovieListFragment.newInstance("top_rated", "Top Movies"), null)
-                commitAllowingStateLoss()
-            }
-        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

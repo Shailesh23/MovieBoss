@@ -28,7 +28,7 @@ data class MovieResult (
     var originalLanguage: String? = null,
     @SerializedName("original_title")
     var originalTitle: String? = null,
-    @SerializedName("title")
+    @SerializedName("title", alternate = ["name"])
     var title: String? = null,
     @SerializedName("vote_average")
     var voteAverage: Double = 0.toDouble(),
