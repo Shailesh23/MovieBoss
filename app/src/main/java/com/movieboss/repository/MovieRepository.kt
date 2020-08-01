@@ -14,9 +14,6 @@ import org.koin.core.inject
 
 class MovieRepository : KoinComponent {
     private val moviesRequest = MoviesRequest()
-    private val popularMovies = MutableLiveData<java.util.ArrayList<MovieResult>>()
-    private val topMovies = MutableLiveData<ArrayList<MovieResult>>()
-    private val upComingMovies = MutableLiveData<ArrayList<MovieResult>>()
     private val searchResults = MutableLiveData<ArrayList<MovieResult>>()
     private val movieDao : MovieDao by inject()
     private val genresDao : GenresDao by inject()
@@ -25,19 +22,9 @@ class MovieRepository : KoinComponent {
         return searchResults
     }
 
-    fun fetchPopularMovies(page: Int): MutableLiveData<ArrayList<MovieResult>> {
-        moviesRequest.getPopularMovies(page, popularMovies)
-        return popularMovies
-    }
-
-    fun fetchTopMovies(page: Int): MutableLiveData<ArrayList<MovieResult>> {
-        moviesRequest.getTopRatedMovies(page, topMovies)
-        return topMovies
-    }
-
-    fun fetchUpComingMovies(page: Int): MutableLiveData<ArrayList<MovieResult>> {
-        moviesRequest.getUpComingMovies(page, upComingMovies)
-        return upComingMovies
+    fun fetchMovies(page: Int, movieRequestType : String,
+                    movieLiveData: MutableLiveData<ArrayList<MovieResult>>) {
+        moviesRequest.fetchMovieData(page, movieRequestType, movieLiveData)
     }
 
     fun saveFavoriteMovie(movie: MovieResult) {

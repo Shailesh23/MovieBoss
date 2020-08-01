@@ -36,11 +36,12 @@ class MoviesRequest {
         movieServer = retrofit.create(MovieServer::class.java)
     }
 
-    fun getPopularMovies(
+    fun fetchMovieData(
         moviePage: Int,
-        popularMovies: MutableLiveData<java.util.ArrayList<MovieResult>>
+        movieRequestType : String,
+        movieLiveData: MutableLiveData<java.util.ArrayList<MovieResult>>
     ) {
-        val call = movieServer.getPopularMovies(moviePage)
+        val call = movieServer.getMoviesData(movieRequestType, moviePage)
 
         call.enqueue(object : Callback<Movies> {
             override fun onFailure(call: Call<Movies>, t: Throwable) {
@@ -53,71 +54,15 @@ class MoviesRequest {
             ) {
                 if (response.isSuccessful) {
                     val tempData = ArrayList<MovieResult>()
-                    if (popularMovies.value != null) {
-                        tempData.addAll(popularMovies.value!!)
+                    if (movieLiveData.value != null) {
+                        tempData.addAll(movieLiveData.value!!)
                     }
                     tempData.addAll(response.body()?.results!!)
-                    popularMovies.value = tempData
+                    movieLiveData.value = tempData
                 }
             }
 
         })
-    }
-
-    fun getUpComingMovies(
-        moviePage: Int,
-        upComingMovies: MutableLiveData<java.util.ArrayList<MovieResult>>
-    ) {
-        val call = movieServer.getUpComingMovies(moviePage)
-
-        call.enqueue(object : Callback<Movies> {
-            override fun onFailure(call: Call<Movies>, t: Throwable) {
-                Logs.e("MoviesRequest", t.message ?: "")
-            }
-
-            override fun onResponse(
-                call: Call<Movies>,
-                response: Response<Movies>
-            ) {
-                if (response.isSuccessful) {
-                    val tempData = ArrayList<MovieResult>()
-                    if (upComingMovies.value != null) {
-                        tempData.addAll(upComingMovies.value!!)
-                    }
-                    tempData.addAll(response.body()?.results!!)
-                    upComingMovies.value = tempData
-                }
-            }
-
-        })
-    }
-
-    fun getTopRatedMovies(
-        moviePage: Int,
-        topMovies: MutableLiveData<ArrayList<MovieResult>>
-    ): MutableLiveData<ArrayList<MovieResult>> {
-        val call = movieServer.getTopMovies(moviePage)
-        call.enqueue(object : Callback<Movies> {
-            override fun onFailure(call: Call<Movies>, t: Throwable) {
-                Logs.e("MoviesRequest", t.message ?: "")
-            }
-
-            override fun onResponse(
-                call: Call<Movies>,
-                response: Response<Movies>
-            ) {
-                if (response.isSuccessful) {
-                    val tempData = ArrayList<MovieResult>()
-                    if (topMovies.value != null) {
-                        tempData.addAll(topMovies.value!!)
-                    }
-                    tempData.addAll(response.body()?.results!!)
-                    topMovies.value = tempData
-                }
-            }
-
-        })
-        return topMovies
     }
 
     fun getSearchResults(

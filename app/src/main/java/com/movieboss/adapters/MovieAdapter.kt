@@ -16,7 +16,7 @@ import com.movieboss.utils.showMovieDetails
 
 class MovieAdapter(private val context : Context) : RecyclerView.Adapter<HomeScreenViewHolder>() {
 
-    var listOfMovieMovies : List<MovieResult> = ArrayList()
+    private var listOfMovieMovies : List<MovieResult> = ArrayList()
 
     fun setMovies(movieMovies: List<MovieResult>) {
         val filteredMovies = movieMovies.filter { !it.posterPath.isNullOrEmpty() }
