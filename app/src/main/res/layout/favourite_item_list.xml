@@ -12,7 +12,6 @@
         android:layout_marginTop="8dp"
         android:layout_height="190dp"
         android:contentDescription="@string/poster_image_for_the_favourite_grid_layout"
-        android:src="@drawable/test"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
