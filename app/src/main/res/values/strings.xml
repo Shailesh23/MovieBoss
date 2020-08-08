@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Movie Boss</string>
+    <string name="app_name">The Movie Guide</string>
     <string name="action_settings">Search</string>
     <string name="home_screen_title">The Movie Boss</string>
     <string name="popular_movies">Popular Movies</string>
