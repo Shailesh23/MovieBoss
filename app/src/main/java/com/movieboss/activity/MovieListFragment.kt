@@ -18,8 +18,9 @@ import com.movieboss.viewmodels.HomeViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val MOVIE_TYPE_KEY = "param1"
+private const val REQUEST_TYPE_KEY = "param1"
 private const val DISPLAY_LABEL = "param2"
+private const val TYPE = "param3"
 
 /**
  * A simple [Fragment] subclass.
@@ -28,8 +29,9 @@ private const val DISPLAY_LABEL = "param2"
  */
 class MovieListFragment : Fragment() {
 
-    private var movieType: String = ""
+    private var requestType: String = ""
     private var label: String? = null
+    private var type: String? = null
     lateinit var movieList : RecyclerView
     private val horizontalSpacing = 15
     private val viewModel by viewModel<HomeViewModel>()
@@ -38,8 +40,9 @@ class MovieListFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            movieType = it.getString(MOVIE_TYPE_KEY)!!
+            requestType = it.getString(REQUEST_TYPE_KEY)!!
             label = it.getString(DISPLAY_LABEL)
+            type = it.getString(TYPE)
         }
     }
 
@@ -68,10 +71,10 @@ class MovieListFragment : Fragment() {
 
             movieList.addItemDecoration(HorizontalSpaceItemDecoration(horizontalSpacing))
 
-            viewModel.setupMovieInfo(movieType)
+            viewModel.setupMovieInfo(requestType)
             handleRequestNewPage()
 
-            viewModel.getMovieObserver(movieType)?.observe(this, Observer<List<MovieResult>> { movieListAdapter.setMovies(it)
+            viewModel.getMovieObserver(requestType)?.observe(this, Observer<List<MovieResult>> { movieListAdapter.setMovies(it)
                 movieListAdapter.notifyDataSetChanged()
                 progressBar.visibility = View.GONE
 
@@ -83,7 +86,7 @@ class MovieListFragment : Fragment() {
     }
 
     private fun handleRequestNewPage() {
-        viewModel.loadMovieData(movieType)
+        viewModel.loadMovieData(requestType, type ?: "movie")
         progressBar.visibility = View.VISIBLE
     }
 
@@ -92,16 +95,17 @@ class MovieListFragment : Fragment() {
          * Use this factory method to create a new instance of
          * this fragment using the provided parameters.
          *
-         * @param movieType Parameter 1.
+         * @param requestType Parameter 1.
          * @param label Parameter 2.
          * @return A new instance of fragment MovieListFragment.
          */
         @JvmStatic
-        fun newInstance(movieType: String, label: String) =
+        fun newInstance(requestType: String, label: String, type : String) =
             MovieListFragment().apply {
                 arguments = Bundle().apply {
-                    putString(MOVIE_TYPE_KEY, movieType)
+                    putString(REQUEST_TYPE_KEY, requestType)
                     putString(DISPLAY_LABEL, label)
+                    putString(TYPE, type)
                 }
             }
     }

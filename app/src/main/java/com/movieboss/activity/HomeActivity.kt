@@ -32,7 +32,7 @@ class HomeActivity : AppCompatActivity() {
 
         Stetho.initializeWithDefaults(applicationContext)
 
-        actionBar?.title = resources.getString(R.string.home_screen_title)
+        actionBar?.title = resources.getString(R.string.app_name)
         Analytics.logScreenEvent(this)
 
         //fetch latest genres and save into db
@@ -41,10 +41,10 @@ class HomeActivity : AppCompatActivity() {
         setupCarousel()
         supportFragmentManager.apply {
             beginTransaction().apply {
-                add(R.id.movie_items_container, MovieListFragment.newInstance("upcoming", "Upcoming Movies"), null)
-                add(R.id.movie_items_container, MovieListFragment.newInstance("popular", "Popular Movies"), null)
-                add(R.id.movie_items_container, MovieListFragment.newInstance("now_playing", "Now Playing"), null)
-                add(R.id.movie_items_container, MovieListFragment.newInstance("top_rated", "Top Movies"), null)
+                add(R.id.movie_items_container, MovieListFragment.newInstance("upcoming", "Upcoming Movies", "movie"), null)
+                add(R.id.movie_items_container, MovieListFragment.newInstance("popular", "Popular Movies", "movie"), null)
+                add(R.id.movie_items_container, MovieListFragment.newInstance("now_playing", "Now Playing", "movie"), null)
+                add(R.id.movie_items_container, MovieListFragment.newInstance("top_rated", "Top Movies", "movie"), null)
                 commitAllowingStateLoss()
             }
         }
@@ -87,7 +87,7 @@ class HomeActivity : AppCompatActivity() {
             }
 
             R.id.action_fav -> {
-                val intent = Intent(this, FavoriteActivity::class.java)
+                val intent = Intent(this, TvViewActivity::class.java)
                 startActivity(intent)
                 true
             }

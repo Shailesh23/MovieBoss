@@ -48,7 +48,7 @@ dependencies {
     implementation 'com.squareup.retrofit2:retrofit:2.6.2'
     implementation("com.squareup.okhttp3:okhttp:4.2.1")
 
-    //loging intercepter
+    //logging intercepter
     implementation 'com.squareup.okhttp3:logging-interceptor:4.2.1'
 
     //gson for network response parsing to Json
@@ -68,7 +68,7 @@ dependencies {
     //recycler slide animator
     implementation 'jp.wasabeef:recyclerview-animators:3.0.0'
 
-    def room_version = "2.2.3"
+    def room_version = "2.2.5"
 
     implementation "androidx.room:room-runtime:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
@@ -85,4 +85,12 @@ dependencies {
     implementation 'com.google.firebase:firebase-crashlytics:17.0.0'
     implementation 'com.facebook.stetho:stetho:1.5.1'
     implementation 'com.google.firebase:firebase-config-ktx:19.1.4'
+
+    def nav_version = "2.3.0"
+    // Kotlin
+    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
+
+    // Feature module Support
+    implementation "androidx.navigation:navigation-dynamic-features-fragment:$nav_version"
 }

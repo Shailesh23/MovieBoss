@@ -11,26 +11,27 @@ import org.koin.core.inject
 class HomeViewModel(application: Application) : AndroidViewModel(application), KoinComponent {
 
     private val moviesRepo by inject<MovieRepository>()
-    private val movieData: HashMap<String, MutableLiveData<ArrayList<MovieResult>>> = HashMap()
+    private val dataContainer: HashMap<String, MutableLiveData<ArrayList<MovieResult>>> = HashMap()
     private val moviePage: HashMap<String, Int> = HashMap()
     val upComingMovieLiveData : MutableLiveData<ArrayList<MovieResult>> = MutableLiveData()
 
-    fun loadMovieData(movieRequestType: String) {
+    fun loadMovieData(movieRequestType: String, type : String) {
         val movieRequestPage = moviePage[movieRequestType] ?: 1
-        moviesRepo.fetchMovies("movie", movieRequestPage, movieRequestType, movieData[movieRequestType]!!)
+        moviesRepo.fetchMovies(type, movieRequestPage, movieRequestType, dataContainer[movieRequestType]!!)
         moviePage[movieRequestType] = movieRequestPage + 1
     }
+
 
     fun getUpcomingMovies() {
         moviesRepo.fetchMovies("movie",1, "upcoming", upComingMovieLiveData)
     }
 
     fun setupMovieInfo(movieRequestType: String) {
-        movieData[movieRequestType] = MutableLiveData()
+        dataContainer[movieRequestType] = MutableLiveData()
     }
 
     fun getMovieObserver(movieRequestType: String): MutableLiveData<ArrayList<MovieResult>>? {
-        return movieData[movieRequestType]
+        return dataContainer[movieRequestType]
     }
     fun updateGenres() {
         moviesRepo.updateGenres()

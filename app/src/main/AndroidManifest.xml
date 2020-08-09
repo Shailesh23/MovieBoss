@@ -15,6 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
+        <activity android:name=".activity.TvViewActivity"></activity>
         <activity
             android:name=".activity.SearchActivity"
             android:label="@string/title_activity_search"
