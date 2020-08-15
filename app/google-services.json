@@ -1,34 +1,34 @@
 {
   "project_info": {
-    "project_number": "515349788361",
-    "firebase_url": "https://movieboss-e1809.firebaseio.com",
-    "project_id": "movieboss-e1809",
-    "storage_bucket": "movieboss-e1809.appspot.com"
+    "project_number": "116738496886",
+    "firebase_url": "https://the-movie-guide-9b704.firebaseio.com",
+    "project_id": "the-movie-guide-9b704",
+    "storage_bucket": "the-movie-guide-9b704.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:515349788361:android:8c2ea2ef00377ac59ebf18",
+        "mobilesdk_app_id": "1:116738496886:android:a57f96bb5842f3fae20257",
         "android_client_info": {
-          "package_name": "com.movieboss"
+          "package_name": "com.themovieguide"
         }
       },
       "oauth_client": [
         {
-          "client_id": "515349788361-qfiicehegkqj20r143i6e5agub7ue83g.apps.googleusercontent.com",
+          "client_id": "116738496886-b85bqmqat5e2rd6gg1bibicu6rmlh5n6.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDIxOnZ_QxZi0t36DQ_8veOiNWVYUDgCtU"
+          "current_key": "AIzaSyBfPWvNvQPznquOuNzq0X_5ck2UcP4mlL8"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "515349788361-qfiicehegkqj20r143i6e5agub7ue83g.apps.googleusercontent.com",
+              "client_id": "116738496886-b85bqmqat5e2rd6gg1bibicu6rmlh5n6.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
