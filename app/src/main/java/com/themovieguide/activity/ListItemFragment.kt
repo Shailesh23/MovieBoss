@@ -24,10 +24,10 @@ private const val TYPE = "param3"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [MovieListFragment.newInstance] factory method to
+ * Use the [ListItemFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class MovieListFragment : Fragment() {
+class ListItemFragment : Fragment() {
 
     private var requestType: String = ""
     private var label: String? = null
@@ -101,7 +101,7 @@ class MovieListFragment : Fragment() {
          */
         @JvmStatic
         fun newInstance(requestType: String, label: String, type : String) =
-            MovieListFragment().apply {
+            ListItemFragment().apply {
                 arguments = Bundle().apply {
                     putString(REQUEST_TYPE_KEY, requestType)
                     putString(DISPLAY_LABEL, label)

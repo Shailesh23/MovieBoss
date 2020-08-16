@@ -5,14 +5,12 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
-import com.bumptech.glide.Glide
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.setupWithNavController
 import com.facebook.stetho.Stetho
 import com.themovieguide.R
 import com.themovieguide.analytics.Analytics
-import com.themovieguide.utils.Constants
-import com.themovieguide.utils.RemoteConfig
-import com.themovieguide.utils.showMovieDetails
 import com.themovieguide.viewmodels.HomeViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -38,35 +36,7 @@ class HomeActivity : AppCompatActivity() {
         //fetch latest genres and save into db
         viewModel.updateGenres()
 
-        setupCarousel()
-        supportFragmentManager.apply {
-            beginTransaction().apply {
-                add(R.id.movie_items_container, MovieListFragment.newInstance("upcoming", "Upcoming Movies", "movie"), null)
-                add(R.id.movie_items_container, MovieListFragment.newInstance("popular", "Popular Movies", "movie"), null)
-                add(R.id.movie_items_container, MovieListFragment.newInstance("now_playing", "Now Playing", "movie"), null)
-                add(R.id.movie_items_container, MovieListFragment.newInstance("top_rated", "Top Movies", "movie"), null)
-                commitAllowingStateLoss()
-            }
-        }
-    }
-
-    private fun setupCarousel() {
-        viewModel.upComingMovieLiveData.observe(this, Observer { movieResponse ->
-            val upcomingMovies = movieResponse.filter { it.backdropPath != null }
-            carouselView.setImageListener { position, imageView ->
-                if (null != imageView)
-                    Glide.with(this@HomeActivity)
-                        .load("https://image.tmdb.org/t/p/${RemoteConfig.fetchConfig(Constants.BACKDROP_SIZE_KEY)}" +
-                                "${upcomingMovies[position].backdropPath}")
-                        .into(imageView)
-            }
-            carouselView.setImageClickListener {
-                showMovieDetails(upcomingMovies[it], this@HomeActivity)
-            }
-            carouselView.pageCount = 5
-        })
-
-        viewModel.getUpcomingMovies()
+        bottom_menu.setupWithNavController(nav_host_fragment.findNavController())
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

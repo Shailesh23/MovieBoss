@@ -8,7 +8,8 @@
     <string name="each_movie_poster">each movie poster</string>
     <string name="title_activity_movie_details_actviity">MovieDetailsActviity</string>
     <string name="favorites">Favorites</string>
-
+    <string name="movie">Movies</string>
+    <string name="tv">TV</string>
     <string name="title_activity_favorite">FavoriteActivity</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
@@ -24,5 +25,19 @@
     <string name="adult">Adult:</string>
     <string name="vote_average">Average Vote:</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_blank_fragment">Place holder about fragment</string>
+    <!-- Preference Titles -->
+    <string name="messages_header">Messages</string>
+    <string name="sync_header">Sync</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">Your signature</string>
+    <string name="reply_title">Default reply action</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Sync email periodically</string>
+    <string name="attachment_title">Download incoming attachments</string>
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails
+    </string>
+    <string name="attachment_summary_off">Only download attachments when manually requested</string>
 </resources>
