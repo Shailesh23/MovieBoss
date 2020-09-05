@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@color/colorSecondary"
     android:paddingTop="24dp"
-    app:behavior_peekHeight="280dp"
+    app:behavior_peekHeight="250dp"
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
     tools:context=".activity.MovieDetailsActivity"
     tools:showIn="@layout/activity_movie_details_actviity">

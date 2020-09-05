@@ -57,7 +57,7 @@ class HomeActivity : AppCompatActivity() {
             }
 
             R.id.action_fav -> {
-                val intent = Intent(this, TvViewActivity::class.java)
+                val intent = Intent(this, FavoriteActivity::class.java)
                 startActivity(intent)
                 true
             }
