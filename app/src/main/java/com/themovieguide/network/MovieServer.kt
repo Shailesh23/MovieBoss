@@ -2,6 +2,7 @@ package com.themovieguide.network
 
 import com.themovieguide.pojo.movies.Genres
 import com.themovieguide.pojo.movies.Movies
+import com.themovieguide.pojo.movies.VideoInfo
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -17,4 +18,7 @@ interface MovieServer {
 
     @GET("genre/movie/list?api_key=c7730ae5397362f560c5a42559525cfa&language=en-US")
     fun getGenres() : Call<Genres>
+
+    @GET("{mediaType}/{id}/videos?api_key=c7730ae5397362f560c5a42559525cfa&language=en-US")
+    fun getVideoInfo(@Path ("mediaType") mediaType: String, @Path("id") id : String) : Call<VideoInfo>
 }

@@ -7,6 +7,7 @@ import com.themovieguide.db.MovieDao
 import com.themovieguide.network.MoviesRequest
 import com.themovieguide.pojo.movies.GenresItem
 import com.themovieguide.pojo.movies.MovieResult
+import com.themovieguide.pojo.movies.VideoInfo
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.koin.core.KoinComponent
@@ -63,5 +64,9 @@ class MovieRepository : KoinComponent {
 
     fun fetchGenres(): LiveData<List<GenresItem>> {
         return genresDao.getGenres()
+    }
+
+    fun getVideoInfo(handleResult : (VideoInfo) -> Unit, mediaType : String, mediaId : String) {
+        moviesRequest.getVideoInfo(handleResult, mediaType, mediaId)
     }
 }

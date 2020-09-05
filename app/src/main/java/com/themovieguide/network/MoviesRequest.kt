@@ -1,11 +1,13 @@
 package com.themovieguide.network
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.GsonBuilder
 import com.themovieguide.pojo.movies.Genres
 import com.themovieguide.pojo.movies.Movies
 import com.themovieguide.pojo.movies.MovieResult
+import com.themovieguide.pojo.movies.VideoInfo
 import com.themovieguide.utils.Logs
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -96,6 +98,23 @@ class MoviesRequest {
             override fun onResponse(call: Call<Genres>, response: Response<Genres>) {
                 if(response.isSuccessful) {
                     handleResult(response.body()!!)
+                }
+            }
+
+        })
+    }
+
+    fun getVideoInfo(handleResult : (VideoInfo) -> Unit, mediaType : String, mediaId : String) {
+        val call = movieServer.getVideoInfo(mediaType, mediaId)
+
+        call.enqueue(object : Callback<VideoInfo>{
+            override fun onFailure(call: Call<VideoInfo>, t: Throwable) {
+                Log.e("MovieRequest", t.message ?: "video call failed")
+            }
+
+            override fun onResponse(call: Call<VideoInfo>, response: Response<VideoInfo>) {
+                if(response.isSuccessful) {
+                    handleResult.invoke(response.body()!!)
                 }
             }
 
