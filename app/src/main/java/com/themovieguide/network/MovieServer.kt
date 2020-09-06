@@ -11,7 +11,8 @@ import retrofit2.http.Query
 interface MovieServer {
 
     @GET("{mediaType}/{type}?api_key=c7730ae5397362f560c5a42559525cfa&language=en-US")
-    fun getMoviesData(@Path("mediaType") mediaType: String, @Path("type") movieType : String, @Query("page") moviePage : Int) : Call<Movies>
+    fun getMoviesData(@Path("mediaType") mediaType: String, @Path("type") movieType : String, @Query("page") moviePage : Int,
+    @Query("with_original_language") originalLang : String = "") : Call<Movies>
 
     @GET("search/movie?api_key=c7730ae5397362f560c5a42559525cfa&page=1&language=en-US")
     fun searchMovies(@Query("query") queryParam : String) : Call<Movies>

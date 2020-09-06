@@ -42,9 +42,10 @@ class MoviesRequest {
         moviePage: Int,
         movieRequestType : String,
         mediaType : String,
-        movieLiveData: MutableLiveData<java.util.ArrayList<MovieResult>>
+        movieLiveData: MutableLiveData<java.util.ArrayList<MovieResult>>,
+        originalLang : String
     ) {
-        val call = movieServer.getMoviesData(mediaType, movieRequestType, moviePage)
+        val call = movieServer.getMoviesData(mediaType, movieRequestType, moviePage, originalLang)
 
         call.enqueue(object : Callback<Movies> {
             override fun onFailure(call: Call<Movies>, t: Throwable) {

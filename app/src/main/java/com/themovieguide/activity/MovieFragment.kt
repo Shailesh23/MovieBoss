@@ -32,6 +32,7 @@ class MovieFragment : Fragment() {
         childFragmentManager.apply {
             beginTransaction().apply {
                 add(R.id.movie_items_container, ListItemFragment.newInstance("upcoming", "Upcoming Movies", "movie"), null)
+                add(R.id.movie_items_container, ListItemFragment.newInstance("movie", "Discover Hindi", "discover", "hi"), null)
                 add(R.id.movie_items_container, ListItemFragment.newInstance("popular", "Popular Movies", "movie"), null)
                 add(R.id.movie_items_container, ListItemFragment.newInstance("now_playing", "Now Playing", "movie"), null)
                 add(R.id.movie_items_container, ListItemFragment.newInstance("top_rated", "Top Movies", "movie"), null)

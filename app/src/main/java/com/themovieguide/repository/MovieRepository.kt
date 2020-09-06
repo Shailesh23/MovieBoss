@@ -16,16 +16,19 @@ import org.koin.core.inject
 class MovieRepository : KoinComponent {
     private val moviesRequest = MoviesRequest()
     private val searchResults = MutableLiveData<ArrayList<MovieResult>>()
-    private val movieDao : MovieDao by inject()
-    private val genresDao : GenresDao by inject()
+    private val movieDao: MovieDao by inject()
+    private val genresDao: GenresDao by inject()
 
     fun getSearchResults(): MutableLiveData<ArrayList<MovieResult>> {
         return searchResults
     }
 
-    fun fetchMovies(mediaType : String, page: Int, movieRequestType : String,
-                    movieLiveData: MutableLiveData<ArrayList<MovieResult>>) {
-        moviesRequest.fetchMovieData(page, movieRequestType, mediaType, movieLiveData)
+    fun fetchMovies(
+        mediaType: String, page: Int, movieRequestType: String,
+        movieLiveData: MutableLiveData<ArrayList<MovieResult>>,
+        originalLang : String
+    ) {
+        moviesRequest.fetchMovieData(page, movieRequestType, mediaType, movieLiveData, originalLang)
     }
 
     fun saveFavoriteMovie(movie: MovieResult) {
@@ -39,21 +42,21 @@ class MovieRepository : KoinComponent {
     }
 
 
-    fun searchMovies(searchParams : String): MutableLiveData<ArrayList<MovieResult>> {
+    fun searchMovies(searchParams: String): MutableLiveData<ArrayList<MovieResult>> {
         return moviesRequest.getSearchResults(searchParams, searchResults)
     }
 
-    fun removeFavouriteMovie(movie : MovieResult) {
+    fun removeFavouriteMovie(movie: MovieResult) {
         GlobalScope.launch {
             movieDao.deleteMovie(movie)
         }
     }
-    
+
     fun updateGenres() {
-        moviesRequest.updateGenresInfo {genres ->
+        moviesRequest.updateGenresInfo { genres ->
             if (genres.genres.isNullOrEmpty()) return@updateGenresInfo
-            for(genre in genres.genres) {
-                if(genre != null) {
+            for (genre in genres.genres) {
+                if (genre != null) {
                     GlobalScope.launch {
                         genresDao.insertGenres(genre)
                     }
@@ -66,7 +69,7 @@ class MovieRepository : KoinComponent {
         return genresDao.getGenres()
     }
 
-    fun getVideoInfo(handleResult : (VideoInfo) -> Unit, mediaType : String, mediaId : String) {
+    fun getVideoInfo(handleResult: (VideoInfo) -> Unit, mediaType: String, mediaId: String) {
         moviesRequest.getVideoInfo(handleResult, mediaType, mediaId)
     }
 }

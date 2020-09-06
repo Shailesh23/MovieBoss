@@ -17,10 +17,10 @@ import com.themovieguide.utils.HorizontalSpaceItemDecoration
 import com.themovieguide.viewmodels.HomeViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val REQUEST_TYPE_KEY = "param1"
 private const val DISPLAY_LABEL = "param2"
 private const val TYPE = "param3"
+private const val ORIGINAL_LANG = "param4"
 
 /**
  * A simple [Fragment] subclass.
@@ -29,6 +29,7 @@ private const val TYPE = "param3"
  */
 class ListItemFragment : Fragment() {
 
+    private var originalLang: String = ""
     private var requestType: String = ""
     private var label: String? = null
     private var type: String? = null
@@ -43,6 +44,7 @@ class ListItemFragment : Fragment() {
             requestType = it.getString(REQUEST_TYPE_KEY)!!
             label = it.getString(DISPLAY_LABEL)
             type = it.getString(TYPE)
+            originalLang = it.getString(ORIGINAL_LANG)!!
         }
     }
 
@@ -86,7 +88,7 @@ class ListItemFragment : Fragment() {
     }
 
     private fun handleRequestNewPage() {
-        viewModel.loadMovieData(requestType, type ?: "movie")
+        viewModel.loadMovieData(requestType, type ?: "movie", originalLang)
         progressBar.visibility = View.VISIBLE
     }
 
@@ -100,12 +102,13 @@ class ListItemFragment : Fragment() {
          * @return A new instance of fragment MovieListFragment.
          */
         @JvmStatic
-        fun newInstance(requestType: String, label: String, type : String) =
+        fun newInstance(requestType: String, label: String, type : String, originalLang : String = "") =
             ListItemFragment().apply {
                 arguments = Bundle().apply {
                     putString(REQUEST_TYPE_KEY, requestType)
                     putString(DISPLAY_LABEL, label)
                     putString(TYPE, type)
+                    putString(ORIGINAL_LANG, originalLang)
                 }
             }
     }
