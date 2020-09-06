@@ -14,8 +14,8 @@ class MovieDetailsViewModel(application: Application) : AndroidViewModel(applica
         movieRepository.saveFavoriteMovie(movieResult)
     }
 
-    fun getVideoInfo(handleResult : (VideoInfo) -> Unit, mediaId : String) {
+    fun getVideoInfo(handleResult : (VideoInfo) -> Unit, mediaId : String, mediaType : String = "movie") {
         //make "movie" dynamic to take tv info also
-        movieRepository.getVideoInfo(handleResult, "movie", mediaId)
+        movieRepository.getVideoInfo(handleResult, mediaType, mediaId)
     }
 }

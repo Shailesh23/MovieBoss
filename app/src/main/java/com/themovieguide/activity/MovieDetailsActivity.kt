@@ -38,7 +38,11 @@ class MovieDetailsActivity : AppCompatActivity() {
         Analytics.logScreenEvent(this)
 
         setupUI()
-        movieDetailsViewModel.getVideoInfo(::handleVideoResult, movie?.id.toString())
+        movieDetailsViewModel.getVideoInfo(
+            ::handleVideoResult,
+            movie?.id.toString(),
+            if (movie?.isTvSeries == true) "tv" else "movie"
+        )
         movieDetailsViewModel.genres.observe(this,
             Observer { genresItems ->
                 tv_genres.text = genresItems?.filter { movie?.genresId?.contains(it.id) == true }

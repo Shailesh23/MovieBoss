@@ -56,11 +56,17 @@ class MoviesRequest {
                 response: Response<Movies>
             ) {
                 if (response.isSuccessful) {
+                    val results = response.body()?.results!!
+                    if (mediaType == "tv") {
+                        results.forEach {
+                            it.isTvSeries = true
+                        }
+                    }
                     val tempData = ArrayList<MovieResult>()
                     if (movieLiveData.value != null) {
                         tempData.addAll(movieLiveData.value!!)
                     }
-                    tempData.addAll(response.body()?.results!!)
+                    tempData.addAll(results)
                     movieLiveData.value = tempData
                 }
             }

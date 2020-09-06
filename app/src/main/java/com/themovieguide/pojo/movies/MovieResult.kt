@@ -37,6 +37,7 @@ data class MovieResult (
     @SerializedName("release_date")
     var releaseDate: String? = null,
     @SerializedName("genre_ids")
-    var genresId : List<Int>?
+    var genresId : List<Int>?,
+    var isTvSeries : Boolean = false
 
 ) : Parcelable

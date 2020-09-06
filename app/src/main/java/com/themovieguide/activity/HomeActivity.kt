@@ -20,6 +20,8 @@ import org.koin.android.viewmodel.ext.android.viewModel
 //todo gradient home screen poster
 //todo dark theme
 //TODO add view binding
+//share with imdb link
+//embedded trailer view
 class HomeActivity : AppCompatActivity() {
     private val viewModel by viewModel<HomeViewModel>()
 
